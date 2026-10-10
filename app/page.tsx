@@ -2,49 +2,22 @@ import Link from "next/link";
 import SectionHeading from "@/components/SectionHeading";
 import StatCard from "@/components/StatCard";
 import BeritaCard from "@/components/BeritaCard";
+import AgendaCard from "@/components/AgendaCard";
+import HeroSlider from "@/components/HeroSlider";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import {
   SEKOLAH,
   STATISTIK,
   PROGRAM_UNGGULAN,
   BERITA_TERBARU,
+  PENGUMUMAN,
+  AGENDA,
 } from "@/data/konten";
 
 export default function Beranda() {
   return (
     <>
-      {/* HERO */}
-      <section className="bg-gradient-to-br from-zamrud-800 via-zamrud-700 to-zamrud-600 text-white">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:py-24 grid gap-10 md:grid-cols-2 items-center">
-          <div>
-            <p className="text-emas-400 font-semibold text-sm uppercase tracking-widest">
-              Madrasah Ibtidaiyah
-            </p>
-            <h1 className="mt-2 text-3xl sm:text-5xl font-extrabold leading-tight">
-              {SEKOLAH.nama}
-            </h1>
-            <p className="mt-4 text-zamrud-100 text-lg">{SEKOLAH.tagline}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/ppdb"
-                className="px-6 py-3 rounded-xl bg-emas-500 text-zamrud-900 font-bold hover:bg-emas-400 transition-colors"
-              >
-                Info PPDB
-              </Link>
-              <Link
-                href="/profil"
-                className="px-6 py-3 rounded-xl border-2 border-white/40 font-semibold hover:bg-white/10 transition-colors"
-              >
-                Lihat Profil
-              </Link>
-            </div>
-          </div>
-          <PlaceholderImage
-            label="FOTO: gedung / kegiatan sekolah"
-            className="h-64 sm:h-80 !bg-white/10 !border-white/30"
-          />
-        </div>
-      </section>
+      <HeroSlider />
 
       {/* STATISTIK */}
       <section className="mx-auto max-w-6xl px-4 py-14">
@@ -121,6 +94,48 @@ export default function Beranda() {
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* PENGUMUMAN & AGENDA */}
+      <section className="mx-auto max-w-6xl px-4 py-14">
+        <div className="grid gap-10 md:grid-cols-2">
+          <div>
+            <SectionHeading judul="Pengumuman" sub="Informasi" align="left" />
+            <div className="space-y-4">
+              {PENGUMUMAN.map((p) => (
+                <div
+                  key={p.judul}
+                  className="bg-white rounded-2xl border border-zamrud-100 p-5 hover:shadow-md transition-shadow"
+                >
+                  <p className="text-xs font-semibold text-emas-600">{p.tanggal}</p>
+                  <h3 className="mt-1 font-bold text-zamrud-800 leading-snug">
+                    {p.judul}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-500">{p.ringkasan}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6">
+              <Link
+                href="/pengumuman"
+                className="inline-block px-6 py-2.5 rounded-xl border-2 border-zamrud-600 text-zamrud-700 font-semibold hover:bg-zamrud-600 hover:text-white transition-colors"
+              >
+                Lihat Semua Pengumuman
+              </Link>
+            </div>
+          </div>
+          <div>
+            <SectionHeading judul="Agenda Sekolah" sub="Agenda" align="left" />
+            <div className="space-y-4">
+              {AGENDA.map((a) => (
+                <AgendaCard key={a.judul} {...a} />
+              ))}
+            </div>
+          </div>
+        </div>
+        <p className="text-center text-xs text-slate-400 mt-6">
+          [placeholder] pengumuman & agenda contoh — akan diganti data asli
+        </p>
       </section>
 
       {/* GALERI CUPLIKAN */}
