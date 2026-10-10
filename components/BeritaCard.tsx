@@ -5,21 +5,28 @@ export default function BeritaCard({
   judul,
   tanggal,
   ringkasan,
+  kategori,
 }: {
   slug: string;
   judul: string;
   tanggal: string;
   ringkasan: string;
+  kategori?: string;
 }) {
   return (
     <Link
       href={`/berita/${slug}`}
       className="block bg-white rounded-2xl border border-zamrud-100 overflow-hidden hover:shadow-md transition-shadow"
     >
-      <div className="h-40 bg-zamrud-50 flex items-center justify-center border-b border-zamrud-100">
+      <div className="relative h-40 bg-zamrud-50 flex items-center justify-center border-b border-zamrud-100">
         <span className="text-xs text-zamrud-700/60 font-medium px-4 text-center">
           [placeholder] FOTO: ilustrasi berita
         </span>
+        {kategori && (
+          <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-zamrud-600 text-white text-xs font-semibold">
+            {kategori}
+          </span>
+        )}
       </div>
       <div className="p-5">
         <p className="text-xs text-emas-600 font-semibold">{tanggal}</p>
