@@ -14,7 +14,7 @@ export default function Akademik() {
         {AGENDA.map((a) => (
           <div
             key={a.judul}
-            className="flex gap-4 bg-white rounded-2xl border border-zamrud-100 p-5 hover:shadow-md transition-shadow"
+            className="flex gap-4 bg-white rounded-2xl border border-zamrud-100 p-5 hover:shadow-sm transition-shadow"
           >
             <div className="shrink-0 w-16 text-center rounded-xl bg-zamrud-600 text-white py-2 h-fit">
               <p className="text-2xl font-extrabold leading-none">{a.tanggal}</p>
