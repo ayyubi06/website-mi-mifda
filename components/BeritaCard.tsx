@@ -1,0 +1,31 @@
+import Link from "next/link";
+
+export default function BeritaCard({
+  slug,
+  judul,
+  tanggal,
+  ringkasan,
+}: {
+  slug: string;
+  judul: string;
+  tanggal: string;
+  ringkasan: string;
+}) {
+  return (
+    <Link
+      href={`/berita/${slug}`}
+      className="block bg-white rounded-2xl border border-zamrud-100 overflow-hidden hover:shadow-md transition-shadow"
+    >
+      <div className="h-40 bg-zamrud-50 flex items-center justify-center border-b border-zamrud-100">
+        <span className="text-xs text-zamrud-700/60 font-medium px-4 text-center">
+          [placeholder] FOTO: ilustrasi berita
+        </span>
+      </div>
+      <div className="p-5">
+        <p className="text-xs text-emas-600 font-semibold">{tanggal}</p>
+        <h3 className="mt-1 font-bold text-zamrud-800 leading-snug">{judul}</h3>
+        <p className="mt-2 text-sm text-slate-500 line-clamp-2">{ringkasan}</p>
+      </div>
+    </Link>
+  );
+}
