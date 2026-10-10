@@ -12,7 +12,7 @@ export default function Guru() {
         {DAFTAR_GURU.map((g) => (
           <div
             key={g.jabatan}
-            className="bg-white rounded-2xl border border-zamrud-100 p-4 text-center hover:shadow-md transition-shadow"
+            className="bg-white rounded-2xl border border-zamrud-100 p-4 text-center hover:shadow-sm transition-shadow"
           >
             <PlaceholderImage label="FOTO" className="h-32 !rounded-xl" />
             <p className="mt-3 font-bold text-zamrud-800 text-sm">{g.nama}</p>
