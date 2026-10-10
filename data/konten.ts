@@ -1,5 +1,23 @@
 // PLACEHOLDER — semua data bertanda [placeholder] harus diganti
 // dengan data asli dari sekolah sebelum publikasi.
+import type { LucideIcon } from "lucide-react";
+import {
+  BookOpen,
+  Sunrise,
+  Compass,
+  Music,
+  GraduationCap,
+  Briefcase,
+  LayoutGrid,
+  Landmark,
+  School,
+  User,
+  Users,
+  Mail,
+  Sparkles,
+  CalendarDays,
+} from "lucide-react";
+
 export const SEKOLAH = {
   nama: "MI Miftahul Huda Bulaksari",
   namaPendek: "MI Miftahul Huda",
@@ -11,31 +29,35 @@ export const SEKOLAH = {
   jamLayanan: "Senin–Jumat, 07.00–14.00", // [placeholder]
 };
 
-export const STATISTIK = [
+export const STATISTIK: { nilai: string; label: string; icon: LucideIcon }[] = [
   // [placeholder] angka-angka di bawah ini contoh — ganti dengan data asli
-  { nilai: "350+", label: "Siswa" },
-  { nilai: "25", label: "Guru & Tendik" },
-  { nilai: "12", label: "Rombongan Belajar" },
-  { nilai: "1998", label: "Tahun Berdiri" },
+  { nilai: "350+", label: "Siswa", icon: GraduationCap },
+  { nilai: "25", label: "Guru & Tendik", icon: Briefcase },
+  { nilai: "12", label: "Rombongan Belajar", icon: LayoutGrid },
+  { nilai: "1998", label: "Tahun Berdiri", icon: Landmark },
 ];
 
-export const PROGRAM_UNGGULAN = [
+export const PROGRAM_UNGGULAN: { judul: string; deskripsi: string; icon: LucideIcon }[] = [
   // [placeholder] usulan — konfirmasi ke sekolah
   {
     judul: "Tahfidz Al-Qur'an",
     deskripsi: "Program hafalan Al-Qur'an bertahap dengan target juz per jenjang.",
+    icon: BookOpen,
   },
   {
     judul: "Shalat Dhuha Berjamaah",
     deskripsi: "Pembiasaan shalat dhuha berjamaah setiap pagi sebelum belajar.",
+    icon: Sunrise,
   },
   {
     judul: "Pramuka",
     deskripsi: "Ekstrakurikuler wajib yang melatih kemandirian dan kepemimpinan.",
+    icon: Compass,
   },
   {
     judul: "Rebana",
     deskripsi: "Seni musik islami sebagai wadah kreativitas siswa.",
+    icon: Music,
   },
 ];
 
@@ -162,7 +184,7 @@ export const UNDUHAN = [
   { nama: "Contoh: Tata Tertib Siswa", format: "PDF" },
 ];
 
-export type NavChild = { href: string; label: string };
+export type NavChild = { href: string; label: string; icon?: LucideIcon };
 export type NavItem = { label: string; href?: string; children?: NavChild[] };
 
 export const NAV_MENU: NavItem[] = [
@@ -170,17 +192,17 @@ export const NAV_MENU: NavItem[] = [
   {
     label: "Profil",
     children: [
-      { href: "/profil", label: "Profil Sekolah" },
-      { href: "/profil/kepala-sekolah", label: "Kepala Madrasah" },
-      { href: "/profil/guru", label: "Daftar Guru" },
-      { href: "/kontak", label: "Kontak Kami" },
+      { href: "/profil", label: "Profil Sekolah", icon: School },
+      { href: "/profil/kepala-sekolah", label: "Kepala Madrasah", icon: User },
+      { href: "/profil/guru", label: "Daftar Guru", icon: Users },
+      { href: "/kontak", label: "Kontak Kami", icon: Mail },
     ],
   },
   {
     label: "Akademik",
     children: [
-      { href: "/program", label: "Program Unggulan" },
-      { href: "/akademik", label: "Kalender Akademik" },
+      { href: "/program", label: "Program Unggulan", icon: Sparkles },
+      { href: "/akademik", label: "Kalender Akademik", icon: CalendarDays },
     ],
   },
   { label: "Download", href: "/download" },
