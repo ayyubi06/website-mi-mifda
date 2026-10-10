@@ -15,7 +15,7 @@ export default function SectionHeading({
         {sub}
       </p>
       <h2 className="text-2xl sm:text-3xl font-bold text-zamrud-800">{judul}</h2>
-      <div className={`mt-3 ${garis} w-16 h-1 rounded bg-emas-500`} />
+      <div className={`mt-4 ${garis} w-20 h-1 rounded-full bg-gradient-to-r from-emas-500 to-emas-300`} />
     </div>
   );
 }
