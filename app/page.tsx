@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Megaphone } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import StatCard from "@/components/StatCard";
 import BeritaCard from "@/components/BeritaCard";
@@ -23,7 +24,7 @@ export default function Beranda() {
       <section className="mx-auto max-w-6xl px-4 py-14">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {STATISTIK.map((s) => (
-            <StatCard key={s.label} nilai={s.nilai} label={s.label} />
+            <StatCard key={s.label} nilai={s.nilai} label={s.label} icon={s.icon} />
           ))}
         </div>
         <p className="text-center text-xs text-slate-400 mt-3">
@@ -61,10 +62,10 @@ export default function Beranda() {
           {PROGRAM_UNGGULAN.map((p) => (
             <div
               key={p.judul}
-              className="bg-white rounded-2xl border border-zamrud-100 p-6 hover:shadow-md transition-shadow"
+              className="group bg-white rounded-2xl border border-zamrud-100 p-6 hover:shadow-sm hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="w-11 h-11 rounded-xl bg-zamrud-600 text-white flex items-center justify-center font-bold text-lg">
-                {p.judul.charAt(0)}
+              <div className="w-11 h-11 rounded-xl bg-zamrud-600 text-white flex items-center justify-center group-hover:bg-emas-500 group-hover:text-zamrud-900 group-hover:-translate-y-1 transition-all duration-300">
+                <p.icon size={22} strokeWidth={1.8} />
               </div>
               <h3 className="mt-4 font-bold text-zamrud-800">{p.judul}</h3>
               <p className="mt-1 text-sm text-slate-500">{p.deskripsi}</p>
@@ -105,13 +106,18 @@ export default function Beranda() {
               {PENGUMUMAN.map((p) => (
                 <div
                   key={p.judul}
-                  className="bg-white rounded-2xl border border-zamrud-100 p-5 hover:shadow-md transition-shadow"
+                  className="flex gap-4 bg-white rounded-2xl border border-zamrud-100 p-5 hover:shadow-sm transition-shadow"
                 >
-                  <p className="text-xs font-semibold text-emas-600">{p.tanggal}</p>
-                  <h3 className="mt-1 font-bold text-zamrud-800 leading-snug">
-                    {p.judul}
-                  </h3>
-                  <p className="mt-1 text-sm text-slate-500">{p.ringkasan}</p>
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-emas-100 text-emas-600 flex items-center justify-center">
+                    <Megaphone size={18} strokeWidth={1.8} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-emas-600">{p.tanggal}</p>
+                    <h3 className="mt-1 font-bold text-zamrud-800 leading-snug">
+                      {p.judul}
+                    </h3>
+                    <p className="mt-1 text-sm text-slate-500">{p.ringkasan}</p>
+                  </div>
                 </div>
               ))}
             </div>
