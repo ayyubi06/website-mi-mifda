@@ -16,7 +16,7 @@ export default function BeritaCard({
   return (
     <Link
       href={`/berita/${slug}`}
-      className="block bg-white rounded-2xl border border-zamrud-100 overflow-hidden hover:shadow-md transition-shadow"
+      className="block bg-white rounded-2xl border border-zamrud-100 overflow-hidden hover:shadow-sm transition-shadow"
     >
       <div className="relative h-40 bg-zamrud-50 flex items-center justify-center border-b border-zamrud-100">
         <span className="text-xs text-zamrud-700/60 font-medium px-4 text-center">
