@@ -11,7 +11,7 @@ export default function Pengumuman() {
         {PENGUMUMAN.map((p) => (
           <div
             key={p.judul}
-            className="bg-white rounded-2xl border border-zamrud-100 p-6 hover:shadow-md transition-shadow"
+            className="bg-white rounded-2xl border border-zamrud-100 p-6 hover:shadow-sm transition-shadow"
           >
             <p className="text-xs font-semibold text-emas-600">{p.tanggal}</p>
             <h3 className="mt-1 text-lg font-bold text-zamrud-800 leading-snug">
