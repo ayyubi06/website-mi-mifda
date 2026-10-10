@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-zamrud-50: #eef7f1;
+  --color-zamrud-100: #d8ecdf;
+  --color-zamrud-200: #b3d9c2;
+  --color-zamrud-600: #0e6b4d;
+  --color-zamrud-700: #0a563e;
+  --color-zamrud-800: #083f2e;
+  --color-zamrud-900: #062e22;
+  --color-emas-400: #d9b545;
+  --color-emas-500: #c9a227;
+  --color-emas-600: #a8861d;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-slate-700 antialiased;
+}
