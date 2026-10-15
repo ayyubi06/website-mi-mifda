@@ -1,0 +1,183 @@
+# Decap CMS — panel admin konten website MI Miftahul Huda Bulaksari.
+# Cara pakai: buka /admin di website, login dengan GitHub, ubah lewat form,
+# klik Publish. Perubahan otomatis commit ke GitHub & Vercel build ulang.
+
+backend:
+  name: github
+  repo: ayyubi06/website-mi-mifda
+  branch: main
+  base_url: https://website-mi-mifda-ckip.vercel.app
+  auth_endpoint: /api/auth
+  auth_scope: repo
+
+site_url: https://website-mi-mifda-ckip.vercel.app/
+display_url: https://website-mi-mifda-ckip.vercel.app/
+locale: id
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  # ---------- Pengaturan sekali-isi ----------
+  - name: "pengaturan"
+    label: "Pengaturan Umum"
+    files:
+      - name: "umum"
+        label: "Info Sekolah & Kepala Madrasah"
+        file: "content/pengaturan.json"
+        fields:
+          - { label: "Nama Sekolah", name: "nama", widget: "string" }
+          - { label: "Nama Pendek", name: "namaPendek", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "text" }
+          - { label: "Alamat", name: "alamat", widget: "text" }
+          - { label: "Telepon", name: "telp", widget: "string" }
+          - { label: "Nomor WhatsApp (format 628xxx)", name: "wa", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Jam Layanan", name: "jamLayanan", widget: "string" }
+          - { label: "Nama Kepala Madrasah", name: "kepalaNama", widget: "string" }
+          - { label: "Sambutan Kepala Madrasah", name: "kepalaSambutan", widget: "text" }
+          - { label: "Foto Kepala Madrasah", name: "kepalaFoto", widget: "image", required: false }
+
+      - name: "hero"
+        label: "Slide Hero (Beranda)"
+        file: "content/hero.json"
+        fields:
+          - label: "Slides"
+            name: "slides"
+            widget: "list"
+            fields:
+              - { label: "Gambar", name: "src", widget: "image" }
+              - { label: "Teks Alternatif", name: "alt", widget: "string" }
+
+      - name: "statistik"
+        label: "Statistik (Beranda)"
+        file: "content/statistik.json"
+        fields:
+          - label: "Item Statistik"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Angka", name: "nilai", widget: "string", hint: "cth: 350+" }
+              - { label: "Label", name: "label", widget: "string", hint: "cth: Siswa" }
+              - label: "Ikon"
+                name: "icon"
+                widget: "select"
+                options:
+                  - { label: "Topi toga (siswa)", value: "graduation-cap" }
+                  - { label: "Tas kerja (guru)", value: "briefcase" }
+                  - { label: "Kotak-kotak (rombel)", value: "layout-grid" }
+                  - { label: "Gedung (berdiri)", value: "landmark" }
+                  - { label: "Buku", value: "book-open" }
+                  - { label: "Matahari", value: "sunrise" }
+                  - { label: "Kompas", value: "compass" }
+                  - { label: "Musik", value: "music" }
+                  - { label: "Sekolah", value: "school" }
+                  - { label: "Bintang", value: "sparkles" }
+                  - { label: "Kalender", value: "calendar-days" }
+                  - { label: "Megafon", value: "megaphone" }
+
+  # ---------- Koleksi ----------
+  - name: "berita"
+    label: "Berita"
+    folder: "content/berita"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "judul"
+    fields:
+      - { label: "Judul", name: "judul", widget: "string" }
+      - { label: "Tanggal", name: "tanggal", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD MMMM YYYY", time_format: false }
+      - label: "Kategori"
+        name: "kategori"
+        widget: "select"
+        options: ["Berita", "PPDB", "Kegiatan Siswa", "Prestasi", "Pengumuman"]
+      - { label: "Ringkasan", name: "ringkasan", widget: "text" }
+      - { label: "Gambar Sampul", name: "gambar", widget: "image", required: false }
+      - { label: "Isi Berita", name: "body", widget: "markdown" }
+
+  - name: "pengumuman"
+    label: "Pengumuman"
+    folder: "content/pengumuman"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "judul"
+    fields:
+      - { label: "Judul", name: "judul", widget: "string" }
+      - { label: "Tanggal", name: "tanggal", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD MMMM YYYY", time_format: false }
+      - { label: "Ringkasan", name: "ringkasan", widget: "text" }
+      - { label: "Isi Pengumuman", name: "body", widget: "markdown" }
+
+  - name: "agenda"
+    label: "Agenda / Kalender Akademik"
+    folder: "content/agenda"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "judul"
+    fields:
+      - { label: "Nama Kegiatan", name: "judul", widget: "string" }
+      - { label: "Tanggal (angka)", name: "tanggal", widget: "string", hint: "cth: 12" }
+      - label: "Bulan"
+        name: "bulan"
+        widget: "select"
+        options: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"]
+      - { label: "Tahun", name: "tahun", widget: "string", hint: "cth: 2026" }
+      - { label: "Tempat", name: "tempat", widget: "string" }
+
+  - name: "program"
+    label: "Program Unggulan"
+    folder: "content/program"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "judul"
+    fields:
+      - { label: "Nama Program", name: "judul", widget: "string" }
+      - { label: "Deskripsi", name: "deskripsi", widget: "text" }
+      - label: "Ikon"
+        name: "icon"
+        widget: "select"
+        options:
+          - { label: "Buku (tahfidz)", value: "book-open" }
+          - { label: "Matahari (dhuha)", value: "sunrise" }
+          - { label: "Kompas (pramuka)", value: "compass" }
+          - { label: "Musik (rebana)", value: "music" }
+          - { label: "Bintang", value: "sparkles" }
+          - { label: "Sekolah", value: "school" }
+          - { label: "Kalender", value: "calendar-days" }
+          - { label: "Megafon", value: "megaphone" }
+
+  - name: "guru"
+    label: "Guru & Tendik"
+    folder: "content/guru"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "nama"
+    fields:
+      - { label: "Nama", name: "nama", widget: "string" }
+      - { label: "Jabatan", name: "jabatan", widget: "string" }
+      - { label: "Foto", name: "foto", widget: "image", required: false }
+
+  - name: "galeri"
+    label: "Galeri"
+    folder: "content/galeri"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "judul"
+    fields:
+      - { label: "Keterangan", name: "judul", widget: "string" }
+      - label: "Jenis"
+        name: "jenis"
+        widget: "select"
+        options:
+          - { label: "Foto", value: "foto" }
+          - { label: "Video YouTube", value: "video" }
+      - { label: "Gambar (untuk foto)", name: "gambar", widget: "image", required: false }
+      - { label: "Tautan YouTube (untuk video)", name: "tautan", widget: "string", required: false }
+
+  - name: "unduhan"
+    label: "Berkas Download"
+    folder: "content/unduhan"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "nama"
+    fields:
+      - { label: "Nama Berkas", name: "nama", widget: "string" }
+      - { label: "File (PDF/dll)", name: "berkas", widget: "file", required: false }
