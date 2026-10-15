@@ -6,12 +6,12 @@ backend:
   name: github
   repo: ayyubi06/website-mi-mifda
   branch: main
-  base_url: https://website-mi-mifda-ckip.vercel.app
+  base_url: https://website-mi-mifda-ssg2.vercel.app
   auth_endpoint: /api/auth
   auth_scope: repo
 
-site_url: https://website-mi-mifda-ckip.vercel.app/
-display_url: https://website-mi-mifda-ckip.vercel.app/
+site_url: https://website-mi-mifda-ssg2.vercel.app/
+display_url: https://website-mi-mifda-ssg2.vercel.app/
 locale: id
 
 media_folder: "public/uploads"
