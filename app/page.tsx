@@ -7,18 +7,31 @@ import AgendaCard from "@/components/AgendaCard";
 import HeroSlider from "@/components/HeroSlider";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import {
-  SEKOLAH,
-  STATISTIK,
-  PROGRAM_UNGGULAN,
-  BERITA_TERBARU,
-  PENGUMUMAN,
-  AGENDA,
+  getSekolah,
+  getKepalaMadrasah,
+  getStatistik,
+  getProgramUnggulan,
+  getBerita,
+  getPengumuman,
+  getAgenda,
+  getHeroSlides,
+  getGaleri,
 } from "@/data/konten";
 
 export default function Beranda() {
+  const SEKOLAH = getSekolah();
+  const KEPALA = getKepalaMadrasah();
+  const STATISTIK = getStatistik();
+  const PROGRAM_UNGGULAN = getProgramUnggulan();
+  const BERITA_TERBARU = getBerita().slice(0, 3);
+  const PENGUMUMAN = getPengumuman().slice(0, 3);
+  const AGENDA = getAgenda().slice(0, 3);
+  const HERO_SLIDES = getHeroSlides();
+  const GALERI = getGaleri().filter((g) => g.jenis === "foto").slice(0, 4);
+
   return (
     <>
-      <HeroSlider />
+      <HeroSlider slides={HERO_SLIDES} namaSekolah={SEKOLAH.nama} tagline={SEKOLAH.tagline} />
 
       {/* STATISTIK */}
       <section className="mx-auto max-w-6xl px-4 py-14">
@@ -27,29 +40,23 @@ export default function Beranda() {
             <StatCard key={s.label} nilai={s.nilai} label={s.label} icon={s.icon} />
           ))}
         </div>
-        <p className="text-center text-xs text-slate-400 mt-3">
-          [placeholder] angka di atas contoh — akan diganti data asli
-        </p>
       </section>
 
       {/* SAMBUTAN */}
       <section className="bg-zamrud-50/60">
         <div className="mx-auto max-w-6xl px-4 py-14 grid gap-8 md:grid-cols-3 items-center">
-          <PlaceholderImage
-            label="FOTO: kepala madrasah"
-            className="h-72"
-          />
+          {KEPALA.foto ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={KEPALA.foto} alt={KEPALA.nama} className="h-72 w-full object-cover rounded-2xl" />
+          ) : (
+            <PlaceholderImage label="FOTO: kepala madrasah" className="h-72" />
+          )}
           <div className="md:col-span-2">
             <SectionHeading judul="Sambutan Kepala Madrasah" sub="Sambutan" />
-            <p className="text-slate-600 leading-relaxed">
-              [placeholder] Assalamu&apos;alaikum warahmatullahi wabarakatuh.
-              Selamat datang di website resmi {SEKOLAH.nama}. Website ini
-              kami hadirkan sebagai jendela informasi bagi wali murid dan
-              masyarakat...
+            <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+              {KEPALA.sambutan}
             </p>
-            <p className="mt-4 font-bold text-zamrud-800">
-              [placeholder] Nama Kepala Madrasah
-            </p>
+            <p className="mt-4 font-bold text-zamrud-800">{KEPALA.nama}</p>
             <p className="text-sm text-slate-500">Kepala {SEKOLAH.nama}</p>
           </div>
         </div>
@@ -72,9 +79,6 @@ export default function Beranda() {
             </div>
           ))}
         </div>
-        <p className="text-center text-xs text-slate-400 mt-3">
-          [placeholder] daftar program usulan — konfirmasi ke sekolah
-        </p>
       </section>
 
       {/* BERITA TERBARU */}
@@ -105,7 +109,7 @@ export default function Beranda() {
             <div className="space-y-4">
               {PENGUMUMAN.map((p) => (
                 <div
-                  key={p.judul}
+                  key={p.slug}
                   className="flex gap-4 bg-white rounded-2xl border border-zamrud-100 p-5 hover:shadow-sm transition-shadow"
                 >
                   <div className="shrink-0 w-10 h-10 rounded-full bg-emas-100 text-emas-600 flex items-center justify-center">
@@ -139,22 +143,22 @@ export default function Beranda() {
             </div>
           </div>
         </div>
-        <p className="text-center text-xs text-slate-400 mt-6">
-          [placeholder] pengumuman & agenda contoh — akan diganti data asli
-        </p>
       </section>
 
       {/* GALERI CUPLIKAN */}
       <section className="mx-auto max-w-6xl px-4 py-14">
         <SectionHeading judul="Galeri Kegiatan" sub="Galeri" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <PlaceholderImage
-              key={i}
-              label={`FOTO: kegiatan ${i}`}
-              className="h-44"
-            />
-          ))}
+          {GALERI.length > 0 ? (
+            GALERI.map((g, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={i} src={g.gambar} alt={g.judul} className="h-44 w-full object-cover rounded-2xl" />
+            ))
+          ) : (
+            [1, 2, 3, 4].map((i) => (
+              <PlaceholderImage key={i} label={`FOTO: kegiatan ${i}`} className="h-44" />
+            ))
+          )}
         </div>
         <div className="text-center mt-8">
           <Link

@@ -1,9 +1,10 @@
 import SectionHeading from "@/components/SectionHeading";
-import { AGENDA } from "@/data/konten";
+import { getAgenda } from "@/data/konten";
 
 export const metadata = { title: "Kalender Akademik" };
 
 export default function Akademik() {
+  const daftar = getAgenda();
   return (
     <div className="mx-auto max-w-4xl px-4 py-14">
       <SectionHeading judul="Kalender Akademik" sub="Akademik" />
@@ -11,7 +12,7 @@ export default function Akademik() {
         Tahun Ajaran 2026/2027 <span className="text-slate-400">[placeholder]</span>
       </p>
       <div className="space-y-4">
-        {AGENDA.map((a) => (
+        {daftar.map((a) => (
           <div
             key={a.judul}
             className="flex gap-4 bg-white rounded-2xl border border-zamrud-100 p-5 hover:shadow-sm transition-shadow"
@@ -29,9 +30,6 @@ export default function Akademik() {
           </div>
         ))}
       </div>
-      <p className="text-center text-xs text-slate-400 mt-6">
-        [placeholder] kalender contoh — akan diganti data asli
-      </p>
     </div>
   );
 }

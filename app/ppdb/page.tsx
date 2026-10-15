@@ -1,10 +1,11 @@
 import Link from "next/link";
 import SectionHeading from "@/components/SectionHeading";
-import { SEKOLAH } from "@/data/konten";
+import { getSekolah } from "@/data/konten";
 
 export const metadata = { title: "PPDB" };
 
 export default function Ppdb() {
+  const SEKOLAH = getSekolah();
   return (
     <div className="mx-auto max-w-4xl px-4 py-14">
       <SectionHeading judul="Penerimaan Peserta Didik Baru" sub="PPDB" />

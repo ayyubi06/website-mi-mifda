@@ -1,16 +1,17 @@
 import SectionHeading from "@/components/SectionHeading";
-import { PENGUMUMAN } from "@/data/konten";
+import { getPengumuman } from "@/data/konten";
 
 export const metadata = { title: "Pengumuman" };
 
 export default function Pengumuman() {
+  const daftar = getPengumuman();
   return (
     <div className="mx-auto max-w-4xl px-4 py-14">
       <SectionHeading judul="Pengumuman" sub="Informasi" />
       <div className="space-y-4">
-        {PENGUMUMAN.map((p) => (
+        {daftar.map((p) => (
           <div
-            key={p.judul}
+            key={p.slug}
             className="bg-white rounded-2xl border border-zamrud-100 p-6 hover:shadow-sm transition-shadow"
           >
             <p className="text-xs font-semibold text-emas-600">{p.tanggal}</p>
@@ -21,9 +22,6 @@ export default function Pengumuman() {
           </div>
         ))}
       </div>
-      <p className="text-center text-xs text-slate-400 mt-6">
-        [placeholder] pengumuman contoh — akan diganti pengumuman asli
-      </p>
     </div>
   );
 }

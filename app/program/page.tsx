@@ -1,14 +1,15 @@
 import SectionHeading from "@/components/SectionHeading";
-import { PROGRAM_UNGGULAN } from "@/data/konten";
+import { getProgramUnggulan } from "@/data/konten";
 
 export const metadata = { title: "Program Unggulan" };
 
 export default function Program() {
+  const daftar = getProgramUnggulan();
   return (
     <div className="mx-auto max-w-6xl px-4 py-14">
       <SectionHeading judul="Program Unggulan" sub="Akademik" />
       <div className="grid gap-4 sm:grid-cols-2">
-        {PROGRAM_UNGGULAN.map((p) => (
+        {daftar.map((p) => (
           <div
             key={p.judul}
             className="group bg-white rounded-2xl border border-zamrud-100 p-6 hover:shadow-sm hover:-translate-y-1 transition-all duration-300"
@@ -21,9 +22,6 @@ export default function Program() {
           </div>
         ))}
       </div>
-      <p className="text-center text-xs text-slate-400 mt-6">
-        [placeholder] daftar program usulan — konfirmasi ke sekolah
-      </p>
     </div>
   );
 }

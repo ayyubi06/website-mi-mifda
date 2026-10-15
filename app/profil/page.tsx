@@ -1,10 +1,11 @@
 import SectionHeading from "@/components/SectionHeading";
 import PlaceholderImage from "@/components/PlaceholderImage";
-import { SEKOLAH } from "@/data/konten";
+import { getSekolah } from "@/data/konten";
 
 export const metadata = { title: "Profil Sekolah" };
 
 export default function Profil() {
+  const SEKOLAH = getSekolah();
   return (
     <div className="mx-auto max-w-6xl px-4 py-14">
       <SectionHeading judul="Profil Sekolah" sub="Profil" />
