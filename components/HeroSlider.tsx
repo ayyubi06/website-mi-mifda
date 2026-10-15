@@ -3,23 +3,30 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { HERO_SLIDES, SEKOLAH } from "@/data/konten";
+import type { HeroSlide } from "@/data/konten";
 
-export default function HeroSlider() {
+export default function HeroSlider({
+  slides,
+  namaSekolah,
+  tagline,
+}: {
+  slides: HeroSlide[];
+  namaSekolah: string;
+  tagline: string;
+}) {
   const [aktif, setAktif] = useState(0);
-  const banyak = HERO_SLIDES.length > 1;
+  const banyak = slides.length > 1;
 
   useEffect(() => {
     if (!banyak) return;
-    const t = setInterval(() => setAktif((i) => (i + 1) % HERO_SLIDES.length), 6000);
+    const t = setInterval(() => setAktif((i) => (i + 1) % slides.length), 6000);
     return () => clearInterval(t);
-  }, [banyak]);
+  }, [banyak, slides.length]);
 
   return (
     <section className="relative text-white overflow-hidden bg-gradient-to-br from-zamrud-800 via-zamrud-700 to-zamrud-600">
-      {/* Slides — jika foto belum tersedia, gradien di atas jadi latar cadangan */}
       {/* Slides */}
-      {HERO_SLIDES.map((s, i) => (
+      {slides.map((s, i) => (
         <div
           key={s.src}
           className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -43,9 +50,9 @@ export default function HeroSlider() {
           Madrasah Ibtidaiyah
         </p>
         <h1 className="mt-2 text-3xl sm:text-5xl font-extrabold leading-tight max-w-2xl">
-          {SEKOLAH.nama}
+          {namaSekolah}
         </h1>
-        <p className="mt-4 text-zamrud-100 text-lg max-w-xl">{SEKOLAH.tagline}</p>
+        <p className="mt-4 text-zamrud-100 text-lg max-w-xl">{tagline}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
             href="/ppdb"
@@ -65,7 +72,7 @@ export default function HeroSlider() {
       {/* Kontrol slider — hanya jika > 1 foto */}
       {banyak && (
         <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2">
-          {HERO_SLIDES.map((s, i) => (
+          {slides.map((s, i) => (
             <button
               key={s.src}
               onClick={() => setAktif(i)}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { NAV_LINKS, SEKOLAH } from "@/data/konten";
+import { NAV_LINKS } from "@/data/navigasi";
+import { getSekolah } from "@/data/konten";
 
 const LAINNYA = [
   { href: "/ppdb", label: "Pendaftaran" },
@@ -10,6 +11,7 @@ const LAINNYA = [
 ];
 
 export default function Footer() {
+  const SEKOLAH = getSekolah();
   return (
     <footer className="bg-zamrud-900 text-zamrud-100">
       <div className="mx-auto max-w-6xl px-4 py-12 grid gap-8 sm:grid-cols-2 md:grid-cols-4">

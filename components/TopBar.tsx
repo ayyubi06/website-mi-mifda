@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { SEKOLAH } from "@/data/konten";
+import { getSekolah } from "@/data/konten";
 
 export default function TopBar() {
+  const SEKOLAH = getSekolah();
   return (
     <div className="bg-zamrud-900 text-zamrud-100 text-xs sm:text-sm">
       <div className="mx-auto max-w-6xl px-4 h-10 flex items-center justify-between gap-4">

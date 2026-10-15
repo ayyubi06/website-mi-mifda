@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
-import { NAV_MENU, SEKOLAH } from "@/data/konten";
+import { NAV_MENU } from "@/data/navigasi";
 
 function isActive(pathname: string, href?: string, children?: { href: string }[]) {
   if (href && pathname === href) return true;
@@ -12,7 +12,7 @@ function isActive(pathname: string, href?: string, children?: { href: string }[]
   return false;
 }
 
-export default function Navbar() {
+export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
   const [buka, setBuka] = useState(false);
   const [subBuka, setSubBuka] = useState<string | null>(null);
   const pathname = usePathname();
@@ -31,7 +31,7 @@ export default function Navbar() {
           <Logo size={40} />
           <div className="leading-tight">
             <p className="font-bold text-zamrud-800 text-sm sm:text-base">
-              {SEKOLAH.nama}
+              {namaSekolah}
             </p>
             <p className="text-xs text-slate-500 hidden sm:block">
               Bulaksari, Kesugihan, Cilacap

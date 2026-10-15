@@ -1,6 +1,7 @@
-import { SEKOLAH } from "@/data/konten";
+import { getSekolah } from "@/data/konten";
 
 export default function WAFloat() {
+  const SEKOLAH = getSekolah();
   return (
     <a
       href={`https://wa.me/${SEKOLAH.wa}`}

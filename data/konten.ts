@@ -1,5 +1,11 @@
-// PLACEHOLDER — semua data bertanda [placeholder] harus diganti
-// dengan data asli dari sekolah sebelum publikasi.
+// Pembaca konten untuk Decap CMS.
+// Semua konten editable tersimpan sebagai file di /content (markdown/JSON).
+// Halaman /admin (Decap) menulis ke file-file tersebut; Vercel build ulang otomatis.
+// Modul ini hanya dipakai di Server Components / route handlers.
+
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
 import type { LucideIcon } from "lucide-react";
 import {
   BookOpen,
@@ -16,197 +22,184 @@ import {
   Mail,
   Sparkles,
   CalendarDays,
+  Megaphone,
+  Image as ImageIcon,
 } from "lucide-react";
 
-export const SEKOLAH = {
-  nama: "MI Miftahul Huda Bulaksari",
-  namaPendek: "MI Miftahul Huda",
-  tagline: "Mencetak Generasi Qur'ani, Berakhlak Mulia, dan Berprestasi",
-  alamat: "Bulaksari, Kesugihan, Kabupaten Cilacap, Jawa Tengah", // [placeholder] alamat lengkap
-  telp: "(0282) 000000", // [placeholder]
-  wa: "6280000000000", // [placeholder] nomor WA resmi -> dipakai tombol wa.me
-  email: "info@mimiftahulhuda.sch.id", // [placeholder]
-  jamLayanan: "Senin–Jumat, 07.00–14.00", // [placeholder]
+const CONTENT_DIR = path.join(process.cwd(), "content");
+
+const IKON: Record<string, LucideIcon> = {
+  "book-open": BookOpen,
+  sunrise: Sunrise,
+  compass: Compass,
+  music: Music,
+  "graduation-cap": GraduationCap,
+  briefcase: Briefcase,
+  "layout-grid": LayoutGrid,
+  landmark: Landmark,
+  school: School,
+  user: User,
+  users: Users,
+  mail: Mail,
+  sparkles: Sparkles,
+  "calendar-days": CalendarDays,
+  megaphone: Megaphone,
+  image: ImageIcon,
 };
 
-export const STATISTIK: { nilai: string; label: string; icon: LucideIcon }[] = [
-  // [placeholder] angka-angka di bawah ini contoh — ganti dengan data asli
-  { nilai: "350+", label: "Siswa", icon: GraduationCap },
-  { nilai: "25", label: "Guru & Tendik", icon: Briefcase },
-  { nilai: "12", label: "Rombongan Belajar", icon: LayoutGrid },
-  { nilai: "1998", label: "Tahun Berdiri", icon: Landmark },
-];
+export function ikonDariNama(nama?: string): LucideIcon {
+  return (nama && IKON[nama]) || Sparkles;
+}
 
-export const PROGRAM_UNGGULAN: { judul: string; deskripsi: string; icon: LucideIcon }[] = [
-  // [placeholder] usulan — konfirmasi ke sekolah
-  {
-    judul: "Tahfidz Al-Qur'an",
-    deskripsi: "Program hafalan Al-Qur'an bertahap dengan target juz per jenjang.",
-    icon: BookOpen,
-  },
-  {
-    judul: "Shalat Dhuha Berjamaah",
-    deskripsi: "Pembiasaan shalat dhuha berjamaah setiap pagi sebelum belajar.",
-    icon: Sunrise,
-  },
-  {
-    judul: "Pramuka",
-    deskripsi: "Ekstrakurikuler wajib yang melatih kemandirian dan kepemimpinan.",
-    icon: Compass,
-  },
-  {
-    judul: "Rebana",
-    deskripsi: "Seni musik islami sebagai wadah kreativitas siswa.",
-    icon: Music,
-  },
-];
+function bacaJSON<T>(namaFile: string, fallback: T): T {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, namaFile), "utf-8")) as T;
+  } catch {
+    return fallback;
+  }
+}
 
-// Foto hero — tambah entri baru di sini untuk menambah slide
-export const HERO_SLIDES = [
-  {
-    src: "/hero(slide1).jpg",
-    alt: "Gedung MI Miftahul Huda Bulaksari",
-  },
-  {
-    src: "/hero(slide2).jpg",
-    alt: "MI Miftahul Huda Bulaksari",
-  },
-];
+function bacaFolder(namaFolder: string): { slug: string; data: Record<string, unknown>; isi: string }[] {
+  const dir = path.join(CONTENT_DIR, namaFolder);
+  let files: string[] = [];
+  try {
+    files = fs.readdirSync(dir).filter((f) => f.endsWith(".md")).sort();
+  } catch {
+    return [];
+  }
+  return files.map((f) => {
+    const raw = fs.readFileSync(path.join(dir, f), "utf-8");
+    const parsed = matter(raw);
+    return { slug: f.replace(/\.md$/, ""), data: parsed.data as Record<string, unknown>, isi: parsed.content.trim() };
+  });
+}
 
-export const BERITA_TERBARU = [
-  // [placeholder] contoh — ganti dengan berita asli (Markdown di content/berita/)
-  {
-    slug: "contoh-berita-1",
-    judul: "Contoh: Penerimaan Peserta Didik Baru Tahun Ajaran 2026/2027",
-    tanggal: "10 Oktober 2026",
-    kategori: "PPDB",
-    ringkasan:
-      "Ini contoh kartu berita. Ganti dengan pengumuman atau kegiatan asli sekolah.",
-  },
-  {
-    slug: "contoh-berita-2",
-    judul: "Contoh: Kegiatan Peringatan Maulid Nabi Muhammad SAW",
-    tanggal: "5 Oktober 2026",
-    kategori: "Kegiatan Siswa",
-    ringkasan:
-      "Ini contoh kartu berita. Ganti dengan pengumuman atau kegiatan asli sekolah.",
-  },
-  {
-    slug: "contoh-berita-3",
-    judul: "Contoh: Siswa Berprestasi di Lomba Tingkat Kecamatan",
-    tanggal: "28 September 2026",
-    kategori: "Prestasi",
-    ringkasan:
-      "Ini contoh kartu berita. Ganti dengan pengumuman atau kegiatan asli sekolah.",
-  },
-];
+function teks(v: unknown, dflt = ""): string {
+  return typeof v === "string" ? v : dflt;
+}
 
-export const NAV_LINKS = [
-  { href: "/", label: "Beranda" },
-  { href: "/profil", label: "Profil" },
-  { href: "/program", label: "Program" },
-  { href: "/galeri", label: "Galeri" },
-  { href: "/berita", label: "Berita" },
-  { href: "/ppdb", label: "PPDB" },
-  { href: "/kontak", label: "Kontak" },
-];
+export function formatTanggalID(iso: string): string {
+  const pendek = iso.slice(0, 10);
+  const d = new Date(pendek + "T00:00:00");
+  if (isNaN(d.getTime())) return iso;
+  return new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(d);
+}
 
-// [placeholder] contoh — ganti dengan pengumuman asli
-export const PENGUMUMAN = [
-  {
-    judul: "Contoh: Jadwal Masuk Semester Genap Tahun Ajaran 2026/2027",
-    tanggal: "8 Oktober 2026",
-    ringkasan:
-      "Ini contoh pengumuman. Ganti dengan pengumuman resmi dari sekolah.",
-  },
-  {
-    judul: "Contoh: Ketentuan Seragam Siswa Tahun Ajaran 2026/2027",
-    tanggal: "1 Oktober 2026",
-    ringkasan:
-      "Ini contoh pengumuman. Ganti dengan pengumuman resmi dari sekolah.",
-  },
-  {
-    judul: "Contoh: Libur Maulid Nabi Muhammad SAW",
-    tanggal: "25 September 2026",
-    ringkasan:
-      "Ini contoh pengumuman. Ganti dengan pengumuman resmi dari sekolah.",
-  },
-];
+// ---------- Pengaturan sekolah ----------
 
-// [placeholder] contoh — ganti dengan agenda asli
-export const AGENDA = [
-  {
-    judul: "Contoh: Peringatan Maulid Nabi Muhammad SAW",
-    tanggal: "12",
-    bulan: "Okt",
-    tahun: "2026",
-    tempat: "[placeholder] Aula madrasah",
-  },
-  {
-    judul: "Contoh: Asesmen Sumatif Akhir Semester Ganjil",
-    tanggal: "24",
-    bulan: "Nov",
-    tahun: "2026",
-    tempat: "[placeholder] Ruang kelas masing-masing",
-  },
-  {
-    judul: "Contoh: Pembagian Rapor Semester Ganjil",
-    tanggal: "18",
-    bulan: "Des",
-    tahun: "2026",
-    tempat: "[placeholder] Aula madrasah",
-  },
-];
-
-export const KEPALA_MADRASAH = {
-  nama: "[placeholder] Nama Kepala Madrasah", // [placeholder]
-  sambutan:
-    "[placeholder] Assalamu'alaikum warahmatullahi wabarakatuh. Selamat datang di website resmi MI Miftahul Huda Bulaksari. Website ini kami hadirkan sebagai jendela informasi bagi wali murid dan masyarakat. Semoga menjadi wasilah kebaikan untuk kita semua. Wassalamu'alaikum warahmatullahi wabarakatuh.",
+export type Sekolah = {
+  nama: string; namaPendek: string; tagline: string; alamat: string;
+  telp: string; wa: string; email: string; jamLayanan: string;
 };
 
-// [placeholder] — ganti dengan data guru asli dari sekolah
-export const DAFTAR_GURU = [
-  { nama: "[placeholder]", jabatan: "Kepala Madrasah" },
-  { nama: "[placeholder]", jabatan: "Guru Kelas 1" },
-  { nama: "[placeholder]", jabatan: "Guru Kelas 2" },
-  { nama: "[placeholder]", jabatan: "Guru Kelas 3" },
-  { nama: "[placeholder]", jabatan: "Guru Kelas 4" },
-  { nama: "[placeholder]", jabatan: "Guru Kelas 5" },
-  { nama: "[placeholder]", jabatan: "Guru Kelas 6" },
-  { nama: "[placeholder]", jabatan: "Guru Tahfidz" },
-];
+export function getSekolah(): Sekolah {
+  const p = bacaJSON<Record<string, string>>("pengaturan.json", {});
+  return {
+    nama: p.nama || "MI Miftahul Huda Bulaksari",
+    namaPendek: p.namaPendek || "MI Miftahul Huda",
+    tagline: p.tagline || "",
+    alamat: p.alamat || "",
+    telp: p.telp || "",
+    wa: p.wa || "",
+    email: p.email || "",
+    jamLayanan: p.jamLayanan || "",
+  };
+}
 
-// [placeholder] contoh — ganti dengan berkas asli
-export const UNDUHAN = [
-  { nama: "Contoh: Kalender Akademik 2026/2027", format: "PDF" },
-  { nama: "Contoh: Formulir PPDB 2026/2027", format: "PDF" },
-  { nama: "Contoh: Brosur PPDB 2026/2027", format: "PDF" },
-  { nama: "Contoh: Tata Tertib Siswa", format: "PDF" },
-];
+export function getKepalaMadrasah(): { nama: string; sambutan: string; foto: string } {
+  const p = bacaJSON<Record<string, string>>("pengaturan.json", {});
+  return { nama: p.kepalaNama || "", sambutan: p.kepalaSambutan || "", foto: p.kepalaFoto || "" };
+}
 
-export type NavChild = { href: string; label: string; icon?: LucideIcon };
-export type NavItem = { label: string; href?: string; children?: NavChild[] };
+// ---------- Koleksi ----------
 
-export const NAV_MENU: NavItem[] = [
-  { label: "Beranda", href: "/" },
-  {
-    label: "Profil",
-    children: [
-      { href: "/profil", label: "Profil Sekolah", icon: School },
-      { href: "/profil/kepala-sekolah", label: "Kepala Madrasah", icon: User },
-      { href: "/profil/guru", label: "Daftar Guru", icon: Users },
-      { href: "/kontak", label: "Kontak Kami", icon: Mail },
-    ],
-  },
-  {
-    label: "Akademik",
-    children: [
-      { href: "/program", label: "Program Unggulan", icon: Sparkles },
-      { href: "/akademik", label: "Kalender Akademik", icon: CalendarDays },
-    ],
-  },
-  { label: "Download", href: "/download" },
-  { label: "Berita", href: "/berita" },
-  { label: "Galeri", href: "/galeri" },
-  { label: "PPDB", href: "/ppdb" },
-];
+export type StatItem = { nilai: string; label: string; icon: LucideIcon };
+export function getStatistik(): StatItem[] {
+  const j = bacaJSON<{ items?: { nilai?: string; label?: string; icon?: string }[] }>("statistik.json", {});
+  return (j.items || []).map((s) => ({
+    nilai: teks(s.nilai), label: teks(s.label), icon: ikonDariNama(s.icon),
+  }));
+}
+
+export type HeroSlide = { src: string; alt: string };
+export function getHeroSlides(): HeroSlide[] {
+  const j = bacaJSON<{ slides?: { src?: string; alt?: string }[] }>("hero.json", {});
+  return (j.slides || []).map((s) => ({ src: teks(s.src), alt: teks(s.alt) }));
+}
+
+export type Program = { judul: string; deskripsi: string; icon: LucideIcon };
+export function getProgramUnggulan(): Program[] {
+  return bacaFolder("program").map(({ data }) => ({
+    judul: teks(data.judul), deskripsi: teks(data.deskripsi), icon: ikonDariNama(teks(data.icon)),
+  }));
+}
+
+export type Berita = { slug: string; judul: string; tanggal: string; tanggalISO: string; kategori: string; ringkasan: string; gambar: string; isi: string };
+export function getBerita(): Berita[] {
+  return bacaFolder("berita")
+    .map(({ slug, data, isi }) => {
+      const iso = teks(data.tanggal);
+      return {
+        slug, judul: teks(data.judul), tanggalISO: iso,
+        tanggal: iso ? formatTanggalID(iso) : "",
+        kategori: teks(data.kategori), ringkasan: teks(data.ringkasan),
+        gambar: teks(data.gambar), isi,
+      };
+    })
+    .sort((a, b) => (b.tanggalISO > a.tanggalISO ? 1 : -1));
+}
+
+export function getBeritaBySlug(slug: string): Berita | undefined {
+  return getBerita().find((b) => b.slug === slug);
+}
+
+export type Pengumuman = { slug: string; judul: string; tanggal: string; tanggalISO: string; ringkasan: string; isi: string };
+export function getPengumuman(): Pengumuman[] {
+  return bacaFolder("pengumuman")
+    .map(({ slug, data, isi }) => {
+      const iso = teks(data.tanggal);
+      return {
+        slug, judul: teks(data.judul), tanggalISO: iso,
+        tanggal: iso ? formatTanggalID(iso) : "",
+        ringkasan: teks(data.ringkasan), isi,
+      };
+    })
+    .sort((a, b) => (b.tanggalISO > a.tanggalISO ? 1 : -1));
+}
+
+export type Agenda = { judul: string; tanggal: string; bulan: string; tahun: string; tempat: string };
+export function getAgenda(): Agenda[] {
+  return bacaFolder("agenda").map(({ data }) => ({
+    judul: teks(data.judul), tanggal: teks(data.tanggal), bulan: teks(data.bulan),
+    tahun: teks(data.tahun), tempat: teks(data.tempat),
+  }));
+}
+
+export type Guru = { nama: string; jabatan: string; foto: string };
+export function getDaftarGuru(): Guru[] {
+  return bacaFolder("guru").map(({ data }) => ({
+    nama: teks(data.nama), jabatan: teks(data.jabatan), foto: teks(data.foto),
+  }));
+}
+
+export type GaleriItem = { judul: string; jenis: "foto" | "video"; gambar: string; tautan: string };
+export function getGaleri(): GaleriItem[] {
+  return bacaFolder("galeri").map(({ data }) => ({
+    judul: teks(data.judul),
+    jenis: teks(data.jenis) === "video" ? "video" : "foto",
+    gambar: teks(data.gambar), tautan: teks(data.tautan),
+  }));
+}
+
+export type Unduhan = { nama: string; berkas: string; format: string };
+export function getUnduhan(): Unduhan[] {
+  return bacaFolder("unduhan").map(({ data }) => {
+    const berkas = teks(data.berkas);
+    const format = berkas.split(".").pop()?.toUpperCase() || "FILE";
+    return { nama: teks(data.nama), berkas, format };
+  });
+}
+
+// Navigasi pindah ke @/data/navigasi (modul aman-client).
+export { NAV_LINKS, NAV_MENU } from "./navigasi";
+export type { NavChild, NavItem } from "./navigasi";
