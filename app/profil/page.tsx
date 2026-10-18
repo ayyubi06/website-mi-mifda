@@ -1,22 +1,33 @@
 import SectionHeading from "@/components/SectionHeading";
-import PlaceholderImage from "@/components/PlaceholderImage";
-import { getSekolah } from "@/data/konten";
+import { getSekolah, getProfil } from "@/data/konten";
 
 export const metadata = { title: "Profil Sekolah" };
 
 export default function Profil() {
   const SEKOLAH = getSekolah();
+  const PROFIL = getProfil();
   return (
     <div className="mx-auto max-w-6xl px-4 py-14">
       <SectionHeading judul="Profil Sekolah" sub="Profil" />
 
       <div className="grid gap-8 md:grid-cols-2 items-start">
-        <PlaceholderImage label="FOTO: gedung madrasah" className="h-72" />
+        {PROFIL.fotoGedung ? (
+          <img
+            src={PROFIL.fotoGedung}
+            alt={`Gedung ${SEKOLAH.nama}`}
+            className="h-72 w-full rounded-2xl object-cover"
+          />
+        ) : (
+          <div className="h-72 bg-zamrud-50 border-2 border-dashed border-zamrud-200 rounded-2xl flex items-center justify-center">
+            <span className="text-xs text-zamrud-700/60 font-medium px-4 text-center">
+              Foto gedung menyusul
+            </span>
+          </div>
+        )}
         <div>
           <h3 className="font-bold text-zamrud-800 text-lg">Sejarah Singkat</h3>
           <p className="mt-2 text-slate-600 leading-relaxed">
-            [placeholder] Tulis sejarah berdirinya {SEKOLAH.nama} di sini —
-            tahun berdiri, latar belakang, dan perkembangannya hingga saat ini.
+            {PROFIL.sejarah || "—"}
           </p>
         </div>
       </div>
@@ -25,15 +36,20 @@ export default function Profil() {
         <div className="bg-zamrud-50/60 rounded-2xl border border-zamrud-100 p-6">
           <h3 className="font-bold text-zamrud-800 text-lg">Visi</h3>
           <p className="mt-2 text-slate-600 leading-relaxed">
-            [placeholder] Tulis visi madrasah di sini.
+            {PROFIL.visi || "—"}
           </p>
         </div>
         <div className="bg-zamrud-50/60 rounded-2xl border border-zamrud-100 p-6">
           <h3 className="font-bold text-zamrud-800 text-lg">Misi</h3>
-          <ul className="mt-2 text-slate-600 leading-relaxed list-disc pl-5 space-y-1">
-            <li>[placeholder] Tulis misi madrasah di sini.</li>
-            <li>[placeholder] Tambah poin misi berikutnya.</li>
-          </ul>
+          {PROFIL.misi.length > 0 ? (
+            <ul className="mt-2 text-slate-600 leading-relaxed list-disc pl-5 space-y-1">
+              {PROFIL.misi.map((m, i) => (
+                <li key={i}>{m}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-2 text-slate-600 leading-relaxed">—</p>
+          )}
         </div>
       </div>
 
@@ -42,11 +58,11 @@ export default function Profil() {
         <dl className="grid gap-3 sm:grid-cols-2">
           {[
             ["Nama Madrasah", SEKOLAH.nama],
-            ["Alamat", `${SEKOLAH.alamat} [placeholder] alamat lengkap`],
-            ["NPSN", "[placeholder]"],
-            ["Akreditasi", "[placeholder]"],
-            ["Telepon", `${SEKOLAH.telp} [placeholder]`],
-            ["Email", `${SEKOLAH.email} [placeholder]`],
+            ["Alamat", SEKOLAH.alamat || "-"],
+            ["NPSN", PROFIL.npsn || "-"],
+            ["Akreditasi", PROFIL.akreditasi || "-"],
+            ["Telepon", SEKOLAH.telp || "-"],
+            ["Email", SEKOLAH.email || "-"],
           ].map(([k, v]) => (
             <div key={k} className="bg-white rounded-xl border border-zamrud-100 p-4">
               <dt className="text-xs font-semibold uppercase tracking-wider text-slate-400">{k}</dt>

@@ -21,8 +21,30 @@ export const NAV_LINKS = [
   { href: "/kontak", label: "Kontak" },
 ];
 
+export const NAV_LAINNYA = [
+  { href: "/ppdb", label: "Pendaftaran" },
+  { href: "/download", label: "Download" },
+  { href: "/berita", label: "Berita" },
+  { href: "/galeri", label: "Galeri" },
+];
+
+export const IKON_MENU: Record<string, LucideIcon> = {
+  "Sekolah": School,
+  "Pengguna": User,
+  "Grup": Users,
+  "Email": Mail,
+  "Bintang": Sparkles,
+  "Kalender": CalendarDays,
+};
+
 export type NavChild = { href: string; label: string; icon?: LucideIcon };
 export type NavItem = { label: string; href?: string; children?: NavChild[] };
+
+// Bentuk data mentah dari CMS (content/navigasi.json) — ikon masih string,
+// di-resolve ke LucideIcon via IKON_MENU saat dirender.
+export type NavChildCMS = { href: string; label: string; icon?: string };
+export type NavItemCMS = { label: string; href?: string; children?: NavChildCMS[] };
+export type FooterLink = { href: string; label: string };
 
 export const NAV_MENU: NavItem[] = [
   { label: "Beranda", href: "/" },

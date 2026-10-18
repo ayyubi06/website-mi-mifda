@@ -1,21 +1,22 @@
 import Link from "next/link";
 import SectionHeading from "@/components/SectionHeading";
-import { getSekolah } from "@/data/konten";
+import { getSekolah, getPpdb } from "@/data/konten";
 
 export const metadata = { title: "PPDB" };
 
 export default function Ppdb() {
   const SEKOLAH = getSekolah();
+  const PPDB = getPpdb();
   return (
     <div className="mx-auto max-w-4xl px-4 py-14">
       <SectionHeading judul="Penerimaan Peserta Didik Baru" sub="PPDB" />
 
       <div className="rounded-3xl bg-gradient-to-r from-emas-500 to-emas-400 p-8 text-center">
         <h2 className="text-2xl font-extrabold text-zamrud-900">
-          PPDB Tahun Ajaran 2026/2027
+          PPDB Tahun Ajaran {PPDB.tahunAjaran}
         </h2>
         <p className="mt-2 text-zamrud-900/80 font-medium">
-          [placeholder] Gelombang pendaftaran akan diumumkan — kuota terbatas
+          {PPDB.infoGelombang}
         </p>
       </div>
 
@@ -23,20 +24,17 @@ export default function Ppdb() {
         <div className="bg-white rounded-2xl border border-zamrud-100 p-6">
           <h3 className="font-bold text-zamrud-800">Syarat Pendaftaran</h3>
           <ul className="mt-2 text-slate-600 text-sm list-disc pl-5 space-y-1">
-            <li>[placeholder] Usia minimal ... tahun per 1 Juli 2026</li>
-            <li>[placeholder] Fotokopi akta kelahiran</li>
-            <li>[placeholder] Fotokopi kartu keluarga</li>
-            <li>[placeholder] Pas foto anak</li>
+            {PPDB.syarat.map((s, i) => (
+              <li key={i}>{s}</li>
+            ))}
           </ul>
         </div>
         <div className="bg-white rounded-2xl border border-zamrud-100 p-6">
           <h3 className="font-bold text-zamrud-800">Alur Pendaftaran</h3>
           <ol className="mt-2 text-slate-600 text-sm list-decimal pl-5 space-y-1">
-            <li>[placeholder] Mengisi formulir pendaftaran</li>
-            <li>[placeholder] Menyerahkan berkas persyaratan</li>
-            <li>[placeholder] Observasi / wawancara</li>
-            <li>[placeholder] Pengumuman hasil</li>
-            <li>[placeholder] Daftar ulang</li>
+            {PPDB.alur.map((a, i) => (
+              <li key={i}>{a}</li>
+            ))}
           </ol>
         </div>
       </div>
