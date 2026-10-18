@@ -3,8 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { LucideIcon } from "lucide-react";
 import Logo from "@/components/Logo";
-import { NAV_MENU } from "@/data/navigasi";
+import { NAV_MENU, IKON_MENU } from "@/data/navigasi";
+import type { NavItem, NavItemCMS } from "@/data/navigasi";
+
+function ikonMenu(icon?: string | LucideIcon): LucideIcon | undefined {
+  if (!icon) return undefined;
+  return typeof icon === "string" ? IKON_MENU[icon] : icon;
+}
 
 function isActive(pathname: string, href?: string, children?: { href: string }[]) {
   if (href && pathname === href) return true;
@@ -12,10 +19,22 @@ function isActive(pathname: string, href?: string, children?: { href: string }[]
   return false;
 }
 
-export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
+export default function Navbar({
+  namaSekolah,
+  logo,
+  subteks,
+  menu,
+}: {
+  namaSekolah: string;
+  logo?: string;
+  subteks?: string;
+  menu?: (NavItemCMS | NavItem)[];
+}) {
   const [buka, setBuka] = useState(false);
   const [subBuka, setSubBuka] = useState<string | null>(null);
   const pathname = usePathname();
+
+  const menuAktif = menu && menu.length > 0 ? menu : NAV_MENU;
 
   const linkCls = (aktif: boolean) =>
     `px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -28,20 +47,22 @@ export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-zamrud-100">
       <div className="mx-auto max-w-6xl px-4 flex items-center justify-between h-16">
         <Link href="/" className="flex items-center gap-3">
-          <Logo size={40} />
+          <Logo size={40} src={logo} />
           <div className="leading-tight">
             <p className="font-bold text-zamrud-800 text-sm sm:text-base">
               {namaSekolah}
             </p>
-            <p className="text-xs text-slate-500 hidden sm:block">
-              Bulaksari, Kesugihan, Cilacap
-            </p>
+            {subteks && (
+              <p className="text-xs text-slate-500 hidden sm:block">
+                {subteks}
+              </p>
+            )}
           </div>
         </Link>
 
         {/* Desktop */}
         <nav className="hidden md:flex items-center gap-1">
-          {NAV_MENU.map((item) =>
+          {menuAktif.map((item) =>
             item.children ? (
               <div key={item.label} className="relative group">
                 <button
@@ -54,7 +75,9 @@ export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
                 </button>
                 <div className="absolute left-0 top-full pt-1 hidden group-hover:block">
                   <div className="w-52 rounded-xl border border-zamrud-100 bg-white shadow-lg py-2">
-                    {item.children.map((c) => (
+                    {item.children.map((c) => {
+                      const Ikon = ikonMenu(c.icon);
+                      return (
                       <Link
                         key={c.href}
                         href={c.href}
@@ -64,8 +87,8 @@ export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
                             : "text-slate-600 hover:bg-zamrud-50 hover:text-zamrud-700"
                         }`}
                       >
-                        {c.icon && (
-                          <c.icon
+                        {Ikon && (
+                          <Ikon
                             size={16}
                             strokeWidth={1.8}
                             className="shrink-0 text-zamrud-500 group-hover/item:translate-x-0.5 transition-transform"
@@ -73,7 +96,8 @@ export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
                         )}
                         {c.label}
                       </Link>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -107,7 +131,7 @@ export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
       {/* Mobile */}
       {buka && (
         <nav className="md:hidden border-t border-zamrud-100 bg-white px-4 py-2 max-h-[70vh] overflow-y-auto">
-          {NAV_MENU.map((item) =>
+          {menuAktif.map((item) =>
             item.children ? (
               <div key={item.label}>
                 <button
@@ -133,7 +157,9 @@ export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
                 </button>
                 {subBuka === item.label && (
                   <div className="pl-4 pb-1">
-                    {item.children.map((c) => (
+                    {item.children.map((c) => {
+                      const Ikon = ikonMenu(c.icon);
+                      return (
                       <Link
                         key={c.href}
                         href={c.href}
@@ -144,12 +170,13 @@ export default function Navbar({ namaSekolah }: { namaSekolah: string }) {
                             : "text-slate-600"
                         }`}
                       >
-                        {c.icon && (
-                          <c.icon size={16} strokeWidth={1.8} className="shrink-0 text-zamrud-500" />
+                        {Ikon && (
+                          <Ikon size={16} strokeWidth={1.8} className="shrink-0 text-zamrud-500" />
                         )}
                         {c.label}
                       </Link>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </div>

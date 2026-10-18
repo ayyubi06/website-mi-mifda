@@ -90,6 +90,7 @@ export function formatTanggalID(iso: string): string {
 export type Sekolah = {
   nama: string; namaPendek: string; tagline: string; alamat: string;
   telp: string; wa: string; email: string; jamLayanan: string;
+  logo: string; subteks: string; favicon: string; deskripsiSingkat: string;
 };
 
 export function getSekolah(): Sekolah {
@@ -103,12 +104,172 @@ export function getSekolah(): Sekolah {
     wa: p.wa || "",
     email: p.email || "",
     jamLayanan: p.jamLayanan || "",
+    logo: p.logo || "",
+    subteks: p.subteks || "",
+    favicon: p.favicon || "",
+    deskripsiSingkat: p.deskripsiSingkat || "",
   };
 }
 
 export function getKepalaMadrasah(): { nama: string; sambutan: string; foto: string } {
   const p = bacaJSON<Record<string, string>>("pengaturan.json", {});
   return { nama: p.kepalaNama || "", sambutan: p.kepalaSambutan || "", foto: p.kepalaFoto || "" };
+}
+
+// ---------- Navigasi (CMS) ----------
+
+import { NAV_LINKS, NAV_MENU, NAV_LAINNYA } from "./navigasi";
+import type { NavItem, NavItemCMS, FooterLink } from "./navigasi";
+
+type NavigasiFile = {
+  navbar?: { label?: string; href?: string; children?: { label?: string; href?: string; icon?: string }[] }[];
+  footerNavigasi?: { label?: string; href?: string }[];
+  footerLainnya?: { label?: string; href?: string }[];
+};
+
+function hrefValid(h: unknown): h is string {
+  return typeof h === "string" && h.trim().startsWith("/");
+}
+
+export function getNavigasi(): {
+  navbar: (NavItemCMS | NavItem)[];
+  footerNavigasi: FooterLink[];
+  footerLainnya: FooterLink[];
+} {
+  const j = bacaJSON<NavigasiFile | null>("navigasi.json", null);
+
+  let navbar: NavItemCMS[] = [];
+  let footerNavigasi: FooterLink[] = [];
+  let footerLainnya: FooterLink[] = [];
+
+  if (j) {
+    if (Array.isArray(j.navbar)) {
+      for (const item of j.navbar) {
+        const label = typeof item.label === "string" ? item.label.trim() : "";
+        if (!label) continue;
+        const hrefRaw = typeof item.href === "string" ? item.href.trim() : "";
+        // href yang diisi harus diawali "/"; item tak valid dibuang
+        if (hrefRaw && !hrefValid(hrefRaw)) continue;
+
+        let children: NavItemCMS["children"];
+        if (Array.isArray(item.children)) {
+          const valid = item.children
+            .filter((c) => {
+              const cl = typeof c.label === "string" ? c.label.trim() : "";
+              return cl !== "" && hrefValid(c.href);
+            })
+            .map((c) => ({
+              label: (c.label as string).trim(),
+              href: (c.href as string).trim(),
+              ...(typeof c.icon === "string" && c.icon.trim() ? { icon: c.icon.trim() } : {}),
+            }));
+          if (valid.length > 0) children = valid;
+        }
+
+        // Item tanpa href dan tanpa children valid -> buang
+        if (!hrefRaw && !children) continue;
+
+        navbar.push({
+          label,
+          ...(hrefRaw ? { href: hrefRaw } : {}),
+          ...(children ? { children } : {}),
+        });
+      }
+    }
+
+    const tautan = (daftar: unknown): FooterLink[] =>
+      Array.isArray(daftar)
+        ? daftar
+            .filter(
+              (t): t is { label: string; href: string } =>
+                !!t &&
+                typeof t === "object" &&
+                typeof (t as { label?: unknown }).label === "string" &&
+                ((t as { label: string }).label as string).trim() !== "" &&
+                hrefValid((t as { href?: unknown }).href)
+            )
+            .map((t) => ({ label: t.label.trim(), href: t.href.trim() }))
+        : [];
+
+    footerNavigasi = tautan(j.footerNavigasi);
+    footerLainnya = tautan(j.footerLainnya);
+  }
+
+  return {
+    navbar: navbar.length > 0 ? navbar : NAV_MENU,
+    footerNavigasi: footerNavigasi.length > 0 ? footerNavigasi : NAV_LINKS,
+    footerLainnya: footerLainnya.length > 0 ? footerLainnya : NAV_LAINNYA,
+  };
+}
+
+// ---------- Profil & PPDB (CMS) ----------
+
+function daftarTeks(v: unknown): string[] {
+  if (!Array.isArray(v)) return [];
+  return v
+    .map((item) => {
+      if (typeof item === "string") return item.trim();
+      if (item && typeof item === "object" && typeof (item as { teks?: unknown }).teks === "string") {
+        return ((item as { teks: string }).teks as string).trim();
+      }
+      return "";
+    })
+    .filter((s) => s !== "");
+}
+
+export type Profil = {
+  sejarah: string;
+  visi: string;
+  misi: string[];
+  npsn: string;
+  akreditasi: string;
+  fotoGedung: string;
+};
+
+export function getProfil(): Profil {
+  const p = bacaJSON<Record<string, unknown>>("profil.json", {});
+  return {
+    sejarah: teks(p.sejarah),
+    visi: teks(p.visi),
+    misi: daftarTeks(p.misi),
+    npsn: teks(p.npsn),
+    akreditasi: teks(p.akreditasi),
+    fotoGedung: teks(p.fotoGedung),
+  };
+}
+
+export type Ppdb = {
+  tahunAjaran: string;
+  infoGelombang: string;
+  syarat: string[];
+  alur: string[];
+};
+
+const SYARAT_PPDB_DEFAULT = [
+  "Usia minimal 6 tahun per 1 Juli 2026",
+  "Fotokopi akta kelahiran",
+  "Fotokopi kartu keluarga",
+  "Pas foto anak",
+];
+
+const ALUR_PPDB_DEFAULT = [
+  "Mengisi formulir pendaftaran",
+  "Menyerahkan berkas persyaratan",
+  "Observasi / wawancara",
+  "Pengumuman hasil",
+  "Daftar ulang",
+];
+
+export function getPpdb(): Ppdb {
+  const p = bacaJSON<Record<string, unknown>>("ppdb.json", {});
+  const syarat = daftarTeks(p.syarat);
+  const alur = daftarTeks(p.alur);
+  return {
+    tahunAjaran: teks(p.tahunAjaran) || "2026/2027",
+    infoGelombang: teks(p.infoGelombang) || "Gelombang pendaftaran akan diumumkan — kuota terbatas",
+    syarat: syarat.length > 0 ? syarat : SYARAT_PPDB_DEFAULT,
+    alur: alur.length > 0 ? alur : ALUR_PPDB_DEFAULT,
+  };
 }
 
 // ---------- Koleksi ----------
@@ -201,5 +362,5 @@ export function getUnduhan(): Unduhan[] {
 }
 
 // Navigasi pindah ke @/data/navigasi (modul aman-client).
-export { NAV_LINKS, NAV_MENU } from "./navigasi";
-export type { NavChild, NavItem } from "./navigasi";
+export { NAV_LINKS, NAV_MENU, NAV_LAINNYA, IKON_MENU } from "./navigasi";
+export type { NavChild, NavItem, NavChildCMS, NavItemCMS, FooterLink } from "./navigasi";

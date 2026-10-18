@@ -1,4 +1,15 @@
-export default function Logo({ size = 40 }: { size?: number }) {
+export default function Logo({ size = 40, src }: { size?: number; src?: string }) {
+  if (src) {
+    return (
+      <img
+        src={src}
+        width={size}
+        height={size}
+        alt="Logo MI Miftahul Huda"
+        className="rounded-full object-contain"
+      />
+    );
+  }
   return (
     <svg
       width={size}

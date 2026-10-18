@@ -37,6 +37,78 @@ collections:
           - { label: "Nama Kepala Madrasah", name: "kepalaNama", widget: "string" }
           - { label: "Sambutan Kepala Madrasah", name: "kepalaSambutan", widget: "text" }
           - { label: "Foto Kepala Madrasah", name: "kepalaFoto", widget: "image", required: false }
+          - { label: "Logo Website", name: "logo", widget: "image", required: false }
+          - { label: "Teks di bawah nama sekolah", name: "subteks", widget: "string", required: false, hint: "cth: Bulaksari, Kesugihan, Cilacap — kosongkan untuk menyembunyikan" }
+          - { label: "Favicon", name: "favicon", widget: "image", required: false }
+          - { label: "Deskripsi singkat (footer)", name: "deskripsiSingkat", widget: "text", required: false }
+
+      - name: "navigasi"
+        label: "Menu Navigasi"
+        file: "content/navigasi.json"
+        fields:
+          - label: "Menu Navbar"
+            name: "navbar"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Tautan", name: "href", widget: "string", required: false, hint: "cth: /profil — kosongkan untuk menu induk dropdown" }
+              - label: "Submenu"
+                name: "children"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Tautan", name: "href", widget: "string" }
+                  - label: "Ikon"
+                    name: "icon"
+                    widget: "select"
+                    required: false
+                    options: ["Sekolah", "Pengguna", "Grup", "Email", "Bintang", "Kalender"]
+          - label: "Footer — Kolom Navigasi"
+            name: "footerNavigasi"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Tautan", name: "href", widget: "string" }
+          - label: "Footer — Kolom Lainnya"
+            name: "footerLainnya"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Tautan", name: "href", widget: "string" }
+
+      - name: "profil"
+        label: "Profil Sekolah"
+        file: "content/profil.json"
+        fields:
+          - { label: "Sejarah Singkat", name: "sejarah", widget: "text", required: false }
+          - { label: "Visi", name: "visi", widget: "text", required: false }
+          - label: "Misi"
+            name: "misi"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Poin misi", name: "teks", widget: "string" }
+          - { label: "NPSN", name: "npsn", widget: "string", required: false }
+          - { label: "Akreditasi", name: "akreditasi", widget: "string", required: false }
+          - { label: "Foto Gedung", name: "fotoGedung", widget: "image", required: false }
+
+      - name: "ppdb"
+        label: "Info PPDB"
+        file: "content/ppdb.json"
+        fields:
+          - { label: "Tahun Ajaran", name: "tahunAjaran", widget: "string", hint: "cth: 2026/2027" }
+          - { label: "Info Gelombang", name: "infoGelombang", widget: "text", required: false }
+          - label: "Syarat Pendaftaran"
+            name: "syarat"
+            widget: "list"
+            fields:
+              - { label: "Syarat", name: "teks", widget: "string" }
+          - label: "Alur Pendaftaran"
+            name: "alur"
+            widget: "list"
+            fields:
+              - { label: "Tahap", name: "teks", widget: "string" }
 
       - name: "hero"
         label: "Slide Hero (Beranda)"

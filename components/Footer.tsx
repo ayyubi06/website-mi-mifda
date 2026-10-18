@@ -1,25 +1,17 @@
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { NAV_LINKS } from "@/data/navigasi";
-import { getSekolah } from "@/data/konten";
-
-const LAINNYA = [
-  { href: "/ppdb", label: "Pendaftaran" },
-  { href: "/download", label: "Download" },
-  { href: "/berita", label: "Berita" },
-  { href: "/galeri", label: "Galeri" },
-];
+import { getSekolah, getNavigasi } from "@/data/konten";
 
 export default function Footer() {
   const SEKOLAH = getSekolah();
+  const NAVIGASI = getNavigasi();
   return (
     <footer className="bg-zamrud-900 text-zamrud-100">
       <div className="mx-auto max-w-6xl px-4 py-12 grid gap-8 sm:grid-cols-2 md:grid-cols-4">
         <div>
           <p className="font-bold text-white text-lg">Tentang Kami</p>
           <p className="mt-3 text-sm leading-relaxed">
-            [placeholder] {SEKOLAH.nama} adalah madrasah ibtidaiyah di
-            Bulaksari, Kesugihan, Cilacap yang berkomitmen {SEKOLAH.tagline.toLowerCase()}.
+            {SEKOLAH.deskripsiSingkat || `${SEKOLAH.nama} — ${SEKOLAH.tagline}`}
           </p>
           <Link
             href="/profil"
@@ -31,7 +23,7 @@ export default function Footer() {
         <div>
           <p className="font-semibold text-white mb-3">Navigasi</p>
           <ul className="space-y-2 text-sm">
-            {NAV_LINKS.map((l) => (
+            {NAVIGASI.footerNavigasi.map((l) => (
               <li key={l.href}>
                 <Link href={l.href} className="hover:text-emas-400 transition-colors">
                   {l.label}
@@ -43,7 +35,7 @@ export default function Footer() {
         <div>
           <p className="font-semibold text-white mb-3">Lainnya</p>
           <ul className="space-y-2 text-sm">
-            {LAINNYA.map((l) => (
+            {NAVIGASI.footerLainnya.map((l) => (
               <li key={l.href}>
                 <Link href={l.href} className="hover:text-emas-400 transition-colors">
                   {l.label}
