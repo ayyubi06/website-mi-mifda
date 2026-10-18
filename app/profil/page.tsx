@@ -1,5 +1,4 @@
 import SectionHeading from "@/components/SectionHeading";
-import PlaceholderImage from "@/components/PlaceholderImage";
 import { getSekolah, getProfil } from "@/data/konten";
 
 export const metadata = { title: "Profil Sekolah" };
@@ -19,7 +18,11 @@ export default function Profil() {
             className="h-72 w-full rounded-2xl object-cover"
           />
         ) : (
-          <PlaceholderImage label="FOTO: gedung madrasah" className="h-72" />
+          <div className="h-72 bg-zamrud-50 border-2 border-dashed border-zamrud-200 rounded-2xl flex items-center justify-center">
+            <span className="text-xs text-zamrud-700/60 font-medium px-4 text-center">
+              Foto gedung menyusul
+            </span>
+          </div>
         )}
         <div>
           <h3 className="font-bold text-zamrud-800 text-lg">Sejarah Singkat</h3>
