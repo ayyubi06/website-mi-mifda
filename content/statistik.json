@@ -1,1 +1,24 @@
-{"items":[{"icon":"graduation-cap","label":"Siswa","nilai":"350+"},{"icon":"briefcase","label":"Guru & Tendik","nilai":"25"},{"icon":"layout-grid","label":"Rombongan Belajar","nilai":"12"},{"icon":"landmark","label":"Tahun Berdiri","nilai":"1998"}]}
+{
+  "items": [
+    {
+      "icon": "graduation-cap",
+      "label": "Siswa",
+      "nilai": "120+"
+    },
+    {
+      "icon": "briefcase",
+      "label": "Guru & Tendik",
+      "nilai": "12"
+    },
+    {
+      "icon": "layout-grid",
+      "label": "Rombongan Belajar",
+      "nilai": "6"
+    },
+    {
+      "icon": "landmark",
+      "label": "Tahun Berdiri",
+      "nilai": "1977"
+    }
+  ]
+}
