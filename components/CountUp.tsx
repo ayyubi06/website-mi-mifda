@@ -20,6 +20,12 @@ export default function CountUp({ nilai }: { nilai: string }) {
       ([e]) => {
         if (e.isIntersecting && !mulai.current) {
           mulai.current = true;
+          // Hormati prefers-reduced-motion: tampilkan angka akhir langsung, tanpa animasi.
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            setTampil(target);
+            obs.disconnect();
+            return;
+          }
           const awal = performance.now();
           const durasi = 1400;
           const jalan = (nu: number) => {
@@ -39,7 +45,7 @@ export default function CountUp({ nilai }: { nilai: string }) {
   }, [target]);
 
   return (
-    <span ref={ref}>
+    <span ref={ref} className="tabular-nums">
       {tampil.toLocaleString("id-ID")}
       {akhiran}
     </span>

@@ -11,7 +11,7 @@ export default function StatCard({
   icon: LucideIcon;
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-zamrud-100 p-6 text-center hover:-translate-y-1 hover:shadow-sm transition-all duration-300">
+    <div className="bg-white rounded-2xl shadow-sm border border-zamrud-100 p-6 text-center hover:-translate-y-1 hover:shadow-sm transition-[transform,box-shadow] duration-300">
       <div className="mx-auto w-11 h-11 rounded-full bg-zamrud-50 text-zamrud-600 flex items-center justify-center">
         <Icon size={22} strokeWidth={1.8} />
       </div>
