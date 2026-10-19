@@ -73,7 +73,7 @@ export default function Navbar({
                     <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
-                <div className="absolute left-0 top-full pt-1 hidden group-hover:block">
+                <div className="absolute left-0 top-full pt-1 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-[opacity,transform,visibility] duration-200 origin-top-left">
                   <div className="w-52 rounded-xl border border-zamrud-100 bg-white shadow-lg py-2">
                     {item.children.map((c) => {
                       const Ikon = ikonMenu(c.icon);

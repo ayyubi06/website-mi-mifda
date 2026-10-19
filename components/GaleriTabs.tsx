@@ -10,6 +10,22 @@ function youtubeEmbed(url: string): string | null {
   return m ? `https://www.youtube.com/embed/${m[1]}` : null;
 }
 
+// Gambar galeri dengan fallback: kalau src gagal dimuat, tampilkan
+// PlaceholderImage berdesain, bukan ikon broken-image bawaan browser.
+function GambarGaleri({ src, alt }: { src: string; alt: string }) {
+  const [gagal, setGagal] = useState(false);
+  if (gagal) return <PlaceholderImage label={alt || "FOTO"} className="h-44" />;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      onError={() => setGagal(true)}
+      className="h-44 w-full object-cover rounded-2xl"
+    />
+  );
+}
+
 export default function GaleriTabs({ fotos, videos }: { fotos: GaleriItem[]; videos: GaleriItem[] }) {
   const [tab, setTab] = useState<"foto" | "video">("foto");
 
@@ -22,7 +38,7 @@ export default function GaleriTabs({ fotos, videos }: { fotos: GaleriItem[]; vid
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+            className={`px-6 py-2.5 rounded-xl text-sm font-semibold active:scale-[0.97] transition-[transform,background-color,border-color,color] ${
               tab === t
                 ? "bg-zamrud-600 text-white"
                 : "border-2 border-zamrud-600 text-zamrud-700 hover:bg-zamrud-50"
@@ -38,8 +54,7 @@ export default function GaleriTabs({ fotos, videos }: { fotos: GaleriItem[]; vid
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {fotos.map((f, i) => (
               <figure key={i}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={f.gambar} alt={f.judul} className="h-44 w-full object-cover rounded-2xl" />
+                <GambarGaleri src={f.gambar} alt={f.judul} />
                 {f.judul && <figcaption className="mt-1 text-xs text-slate-500 text-center">{f.judul}</figcaption>}
               </figure>
             ))}

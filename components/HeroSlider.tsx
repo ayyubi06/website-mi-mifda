@@ -19,6 +19,8 @@ export default function HeroSlider({
 
   useEffect(() => {
     if (!banyak) return;
+    // Hormati prefers-reduced-motion: slider tidak auto-advance.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = setInterval(() => setAktif((i) => (i + 1) % slides.length), 6000);
     return () => clearInterval(t);
   }, [banyak, slides.length]);
@@ -56,13 +58,13 @@ export default function HeroSlider({
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
             href="/ppdb"
-            className="px-6 py-3 rounded-xl bg-emas-500 text-zamrud-900 font-bold hover:bg-emas-400 transition-colors"
+            className="px-6 py-3 rounded-xl bg-emas-500 text-zamrud-900 font-bold hover:bg-emas-400 active:scale-[0.97] transition-[transform,background-color]"
           >
             Info PPDB
           </Link>
           <Link
             href="/profil"
-            className="px-6 py-3 rounded-xl border-2 border-white/40 font-semibold hover:bg-white/10 transition-colors"
+            className="px-6 py-3 rounded-xl border-2 border-white/40 font-semibold hover:bg-white/10 active:scale-[0.97] transition-[transform,background-color]"
           >
             Lihat Profil
           </Link>
@@ -77,8 +79,8 @@ export default function HeroSlider({
               key={s.src}
               onClick={() => setAktif(i)}
               aria-label={`Slide ${i + 1}`}
-              className={`h-2 rounded-full transition-all ${
-                i === aktif ? "w-8 bg-emas-400" : "w-2 bg-white/50 hover:bg-white"
+              className={`h-2 w-8 rounded-full origin-left transition-transform duration-300 ${
+                i === aktif ? "scale-x-100 bg-emas-400" : "scale-x-25 bg-white/50 hover:bg-white"
               }`}
             />
           ))}
