@@ -4,7 +4,7 @@ import SectionHeading from "@/components/SectionHeading";
 import StatCard from "@/components/StatCard";
 import BeritaCard from "@/components/BeritaCard";
 import AgendaCard from "@/components/AgendaCard";
-import HeroSlider from "@/components/HeroSlider";
+import HeroEtalase from "@/components/HeroEtalase";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import {
   getSekolah,
@@ -14,7 +14,6 @@ import {
   getBerita,
   getPengumuman,
   getAgenda,
-  getHeroSlides,
   getGaleri,
 } from "@/data/konten";
 
@@ -26,12 +25,13 @@ export default function Beranda() {
   const BERITA_TERBARU = getBerita().slice(0, 3);
   const PENGUMUMAN = getPengumuman().slice(0, 3);
   const AGENDA = getAgenda().slice(0, 3);
-  const HERO_SLIDES = getHeroSlides();
   const GALERI = getGaleri().filter((g) => g.jenis === "foto").slice(0, 4);
+  const chipSiswa = STATISTIK.find((s) => s.label === "Siswa")?.nilai || "120+";
+  const chipTahun = STATISTIK.find((s) => s.label === "Tahun Berdiri")?.nilai || "1977";
 
   return (
     <>
-      <HeroSlider slides={HERO_SLIDES} namaSekolah={SEKOLAH.nama} tagline={SEKOLAH.tagline} />
+      <HeroEtalase tagline={SEKOLAH.tagline} chipSiswa={chipSiswa} chipTahun={chipTahun} />
 
       {/* STATISTIK */}
       <section className="mx-auto max-w-6xl px-4 py-14">
