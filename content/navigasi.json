@@ -105,7 +105,8 @@
       "label": "PPDB"
     },
     {
-      "label": "Kotak Saran"
+      "label": "Kotak Saran",
+      "href": "/saran"
     }
   ]
 }
