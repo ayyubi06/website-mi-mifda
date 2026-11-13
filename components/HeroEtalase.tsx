@@ -36,10 +36,14 @@ export default function HeroEtalase({
   tagline,
   chipSiswa,
   chipTahun,
+  judulBaris1,
+  judulBaris2,
 }: {
   tagline: string;
   chipSiswa: string;
   chipTahun: string;
+  judulBaris1: string;
+  judulBaris2: string;
 }) {
   const [masuk, setMasuk] = useState(false);
   const [statis, setStatis] = useState(false);
@@ -94,8 +98,8 @@ export default function HeroEtalase({
             className={`mt-4 text-4xl sm:text-5xl font-extrabold leading-[1.1] ${fadeNaik(120)}`}
             style={gayaTunda(120)}
           >
-            Sekolahnya anak Bulaksari.{" "}
-            <span className="text-emas-400">Kebanggaan orang tuanya.</span>
+            {judulBaris1}{" "}
+            <span className="text-emas-400">{judulBaris2}</span>
           </h1>
           <p
             className={`mt-5 text-lg text-white/80 max-w-xl ${fadeNaik(200)}`}

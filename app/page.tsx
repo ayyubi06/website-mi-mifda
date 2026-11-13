@@ -9,6 +9,7 @@ import PlaceholderImage from "@/components/PlaceholderImage";
 import {
   getSekolah,
   getKepalaMadrasah,
+  getHero,
   getStatistik,
   getProgramUnggulan,
   getBerita,
@@ -20,6 +21,7 @@ import {
 export default function Beranda() {
   const SEKOLAH = getSekolah();
   const KEPALA = getKepalaMadrasah();
+  const HERO = getHero();
   const STATISTIK = getStatistik();
   const PROGRAM_UNGGULAN = getProgramUnggulan();
   const BERITA_TERBARU = getBerita().slice(0, 3);
@@ -31,7 +33,7 @@ export default function Beranda() {
 
   return (
     <>
-      <HeroEtalase tagline={SEKOLAH.tagline} chipSiswa={chipSiswa} chipTahun={chipTahun} />
+      <HeroEtalase tagline={SEKOLAH.tagline} chipSiswa={chipSiswa} chipTahun={chipTahun} judulBaris1={HERO.judulBaris1} judulBaris2={HERO.judulBaris2} />
 
       {/* STATISTIK */}
       <section className="mx-auto max-w-6xl px-4 py-14">

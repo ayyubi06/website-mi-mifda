@@ -114,6 +114,8 @@ collections:
         label: "Slide Hero (Beranda)"
         file: "content/hero.json"
         fields:
+          - { label: "Judul Baris 1", name: "judulBaris1", widget: "string" }
+          - { label: "Judul Baris 2", name: "judulBaris2", widget: "string", hint: "Tampil dengan warna emas" }
           - label: "Slides"
             name: "slides"
             widget: "list"

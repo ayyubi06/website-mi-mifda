@@ -288,6 +288,16 @@ export function getHeroSlides(): HeroSlide[] {
   return (j.slides || []).map((s) => ({ src: teks(s.src), alt: teks(s.alt) }));
 }
 
+export type Hero = { judulBaris1: string; judulBaris2: string; slides: HeroSlide[] };
+export function getHero(): Hero {
+  const j = bacaJSON<{ judulBaris1?: string; judulBaris2?: string; slides?: { src?: string; alt?: string }[] }>("hero.json", {});
+  return {
+    judulBaris1: teks(j.judulBaris1) || "Sekolahnya anak Bulaksari.",
+    judulBaris2: teks(j.judulBaris2) || "Kebanggaan orang tuanya.",
+    slides: (j.slides || []).map((s) => ({ src: teks(s.src), alt: teks(s.alt) })),
+  };
+}
+
 export type Program = { judul: string; deskripsi: string; icon: LucideIcon };
 export function getProgramUnggulan(): Program[] {
   return bacaFolder("program").map(({ data }) => ({
