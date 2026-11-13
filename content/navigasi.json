@@ -5,10 +5,6 @@
       "label": "Pendaftaran"
     },
     {
-      "href": "/download",
-      "label": "Download"
-    },
-    {
       "href": "/berita",
       "label": "Berita"
     },
@@ -45,6 +41,10 @@
     {
       "href": "/kontak",
       "label": "Kontak"
+    },
+    {
+      "label": "Kotak Saran",
+      "href": "/saran"
     }
   ],
   "navbar": [
@@ -101,12 +101,12 @@
       "label": "Galeri"
     },
     {
-      "href": "/ppdb",
-      "label": "PPDB"
-    },
-    {
       "label": "Kotak Saran",
       "href": "/saran"
+    },
+    {
+      "href": "/ppdb",
+      "label": "PPDB"
     }
   ]
 }
