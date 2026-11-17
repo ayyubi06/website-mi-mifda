@@ -1,6 +1,6 @@
 # Website MI Miftahul Huda Bulaksari
 
-Website profil resmi MI Miftahul Huda Bulaksari (Bulaksari, Kesugihan, Cilacap).
+Website profil resmi MI Miftahul Huda Bulaksari (Bulaksari, Bantarsari, Cilacap).
 
 ## Tech stack
 
