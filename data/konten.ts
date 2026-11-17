@@ -78,6 +78,17 @@ function teks(v: unknown, dflt = ""): string {
   return typeof v === "string" ? v : dflt;
 }
 
+// gray-matter membaca `tanggal: 2026-11-17` (tanpa kutip) sebagai objek Date,
+// bukan string — normalisasi ke "YYYY-MM-DD" agar sort & tampilan tanggal benar.
+// Artikel baru yang tanggalnya tanpa kutip tidak mengulangi bug ini.
+function tanggalISO(v: unknown): string {
+  if (v instanceof Date) {
+    if (isNaN(v.getTime())) return "";
+    return v.toISOString().slice(0, 10);
+  }
+  return teks(v);
+}
+
 export function formatTanggalID(iso: string): string {
   const pendek = iso.slice(0, 10);
   const d = new Date(pendek + "T00:00:00");
@@ -309,7 +320,7 @@ export type Berita = { slug: string; judul: string; tanggal: string; tanggalISO:
 export function getBerita(): Berita[] {
   return bacaFolder("berita")
     .map(({ slug, data, isi }) => {
-      const iso = teks(data.tanggal);
+      const iso = tanggalISO(data.tanggal);
       return {
         slug, judul: teks(data.judul), tanggalISO: iso,
         tanggal: iso ? formatTanggalID(iso) : "",
@@ -328,7 +339,7 @@ export type Pengumuman = { slug: string; judul: string; tanggal: string; tanggal
 export function getPengumuman(): Pengumuman[] {
   return bacaFolder("pengumuman")
     .map(({ slug, data, isi }) => {
-      const iso = teks(data.tanggal);
+      const iso = tanggalISO(data.tanggal);
       return {
         slug, judul: teks(data.judul), tanggalISO: iso,
         tanggal: iso ? formatTanggalID(iso) : "",

@@ -7,8 +7,8 @@ export default function Footer() {
   const NAVIGASI = getNavigasi();
   return (
     <footer className="bg-zamrud-900 text-zamrud-100">
-      <div className="mx-auto max-w-6xl px-4 py-12 grid gap-8 sm:grid-cols-2 md:grid-cols-4">
-        <div>
+      <div className="mx-auto max-w-6xl px-4 py-12 grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-4">
+        <div className="col-span-2 sm:col-span-1">
           <p className="font-bold text-white text-lg">Tentang Kami</p>
           <p className="mt-3 text-sm leading-relaxed">
             {SEKOLAH.deskripsiSingkat || `${SEKOLAH.nama} — ${SEKOLAH.tagline}`}
@@ -44,7 +44,7 @@ export default function Footer() {
             ))}
           </ul>
         </div>
-        <div>
+        <div className="col-span-2 sm:col-span-1">
           <p className="font-semibold text-white mb-3">Kontak Kami</p>
           <ul className="space-y-2.5 text-sm">
             <li className="flex items-start gap-2.5">

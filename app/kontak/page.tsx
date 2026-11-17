@@ -1,5 +1,4 @@
 import SectionHeading from "@/components/SectionHeading";
-import PlaceholderImage from "@/components/PlaceholderImage";
 import { getSekolah } from "@/data/konten";
 
 export const metadata = { title: "Kontak Kami" };
@@ -24,7 +23,14 @@ export default function Kontak() {
             </div>
           ))}
         </div>
-        <PlaceholderImage label="PETA: lokasi madrasah [placeholder]" className="h-96" />
+        <iframe
+          title="Peta lokasi MI Miftahul Huda Bulaksari"
+          src="https://maps.google.com/maps?q=-7.5577765,108.8904986&z=16&output=embed"
+          className="h-96 w-full rounded-2xl border border-zamrud-100"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
       </div>
     </div>
   );
