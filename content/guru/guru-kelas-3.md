@@ -1,5 +1,5 @@
 ---
-nama: "[placeholder]"
-jabatan: "Guru Kelas 3"
-foto: ""
+nama: "Khayat Miftakhul Faozi"
+jabatan: "Wali Kelas 3"
+foto: "/uploads/khayat-miftakhul-faozi.jpg"
 ---
