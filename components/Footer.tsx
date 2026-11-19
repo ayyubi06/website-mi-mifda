@@ -93,7 +93,7 @@ export default function Footer() {
               <span>{SEKOLAH.alamat}</span>
             </li>
             <li>
-              <a href={`mailto:${SEKOLAH.email}`} className="flex items-center gap-2.5 hover:text-emas-400 transition-colors">
+              <a href={`mailto:${SEKOLAH.email}`} className="flex items-center gap-2.5 hover:text-emas-400 transition-colors md:break-all xl:break-normal">
                 <Mail size={16} strokeWidth={1.8} className="shrink-0 text-emas-400" />
                 {SEKOLAH.email}
               </a>
