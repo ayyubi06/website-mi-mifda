@@ -21,11 +21,11 @@ export default function Kontak() {
       <div className="grid gap-8 md:grid-cols-2 items-start">
         <div className="space-y-4">
           {[
-            ["Alamat", `${SEKOLAH.alamat} [placeholder] alamat lengkap`],
-            ["Telepon", `${SEKOLAH.telp} [placeholder]`],
-            ["Email", `${SEKOLAH.email} [placeholder]`],
-            ["WhatsApp", `${SEKOLAH.wa} [placeholder] nomor resmi`],
-            ["Jam Layanan", `${SEKOLAH.jamLayanan} [placeholder]`],
+            ["Alamat", SEKOLAH.alamat],
+            ["Telepon", SEKOLAH.telp],
+            ["Email", SEKOLAH.email],
+            ["WhatsApp", SEKOLAH.wa],
+            ["Jam Layanan", SEKOLAH.jamLayanan],
           ].map(([k, v]) => (
             <div key={k} className="bg-white rounded-2xl border border-zamrud-100 p-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{k}</p>
