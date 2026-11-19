@@ -43,6 +43,14 @@ export default function Navbar({
         : "text-slate-600 hover:text-zamrud-700 hover:bg-zamrud-50"
     }`;
 
+  // Item PPDB menonjol sebagai kotak kuning (aksen emas situs) dengan teks gelap.
+  const ppdbCls = (aktif: boolean, mobile = false) =>
+    `${mobile ? "block px-4 py-2.5" : "px-4 py-2"} rounded-lg text-sm font-bold transition-colors ${
+      aktif
+        ? "bg-emas-400 text-zamrud-900 ring-2 ring-emas-600"
+        : "bg-emas-400 text-zamrud-900 hover:bg-emas-500"
+    }`;
+
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-zamrud-100">
       <div className="mx-auto max-w-6xl px-4 flex items-center justify-between h-16">
@@ -105,7 +113,11 @@ export default function Navbar({
               <Link
                 key={item.label}
                 href={item.href!}
-                className={linkCls(pathname === item.href)}
+                className={
+                  item.href === "/ppdb"
+                    ? ppdbCls(pathname === item.href)
+                    : linkCls(pathname === item.href)
+                }
               >
                 {item.label}
               </Link>
@@ -185,11 +197,15 @@ export default function Navbar({
                 key={item.label}
                 href={item.href!}
                 onClick={() => setBuka(false)}
-                className={`block px-3 py-2.5 rounded-lg text-sm font-medium ${
-                  pathname === item.href
-                    ? "bg-zamrud-50 text-zamrud-700"
-                    : "text-slate-600 hover:bg-zamrud-50"
-                }`}
+                className={
+                  item.href === "/ppdb"
+                    ? ppdbCls(pathname === item.href, true)
+                    : `block px-3 py-2.5 rounded-lg text-sm font-medium ${
+                        pathname === item.href
+                          ? "bg-zamrud-50 text-zamrud-700"
+                          : "text-slate-600 hover:bg-zamrud-50"
+                      }`
+                }
               >
                 {item.label}
               </Link>
