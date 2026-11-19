@@ -17,7 +17,7 @@ export default function Pengumuman() {
             jenis="pengumuman"
             className="rounded-2xl border border-zamrud-100 p-6 hover:shadow-sm transition-shadow"
           >
-            <p className="text-xs font-semibold text-emas-600">{p.tanggal}</p>
+            <p className="text-xs font-semibold text-emas-600 group-[.sorot-aktif]:text-zamrud-900">{p.tanggal}</p>
             <h3 className="mt-1 text-lg font-bold text-zamrud-800 leading-snug">
               {p.judul}
             </h3>

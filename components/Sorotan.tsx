@@ -9,6 +9,9 @@ import { apakahAgendaAktif, apakahBaruPengumuman } from "@/lib/sorotan-tanggal";
 // server (tanggal build) dan klien (tanggal buka halaman) bisa berbeda dan
 // menimbulkan galat hidrasi. Keadaan awal selalu putih (sama dengan server),
 // lalu efek memperbarui latar begitu komponen terpasang di peramban.
+// Saat tersorot, akar juga mendapat kelas penanda `sorot-aktif` (bersama
+// `group`) supaya isi card bisa ikut menggelap lewat varian
+// `group-[.sorot-aktif]:...` — dipakai ikon + tanggal pengumuman (item 18).
 export default function Sorotan({
   tanggalISO,
   jenis,
@@ -29,7 +32,9 @@ export default function Sorotan({
     );
   }, [tanggalISO, jenis]);
   return (
-    <div className={`${sorot ? "bg-kuning-muda" : "bg-white"} ${className}`}>
+    <div
+      className={`group ${sorot ? "bg-kuning-muda sorot-aktif" : "bg-white"} ${className}`}
+    >
       {children}
     </div>
   );
