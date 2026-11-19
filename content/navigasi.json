@@ -41,10 +41,6 @@
     {
       "href": "/kontak",
       "label": "Kontak"
-    },
-    {
-      "label": "Kotak Saran",
-      "href": "/saran"
     }
   ],
   "navbar": [
@@ -99,10 +95,6 @@
     {
       "href": "/galeri",
       "label": "Galeri"
-    },
-    {
-      "label": "Kotak Saran",
-      "href": "/saran"
     },
     {
       "href": "/ppdb",
