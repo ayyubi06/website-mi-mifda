@@ -64,11 +64,6 @@
           "href": "/profil/guru",
           "icon": "Grup",
           "label": "Daftar Guru"
-        },
-        {
-          "href": "/kontak",
-          "icon": "Email",
-          "label": "Kontak Kami"
         }
       ],
       "label": "Profil"
@@ -95,6 +90,10 @@
     {
       "href": "/galeri",
       "label": "Galeri"
+    },
+    {
+      "href": "/kontak",
+      "label": "Kontak Kami"
     },
     {
       "href": "/ppdb",
