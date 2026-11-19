@@ -33,6 +33,9 @@ collections:
           - { label: "Telepon", name: "telp", widget: "string" }
           - { label: "Nomor WhatsApp (format 628xxx)", name: "wa", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
+          - { label: "Instagram (tautan lengkap)", name: "instagram", widget: "string", required: false }
+          - { label: "Facebook (tautan lengkap)", name: "facebook", widget: "string", required: false }
+          - { label: "TikTok (tautan lengkap)", name: "tiktok", widget: "string", required: false }
           - { label: "Jam Layanan", name: "jamLayanan", widget: "string" }
           - { label: "Nama Kepala Madrasah", name: "kepalaNama", widget: "string" }
           - { label: "Sambutan Kepala Madrasah", name: "kepalaSambutan", widget: "text" }

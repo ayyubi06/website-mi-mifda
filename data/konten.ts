@@ -102,6 +102,7 @@ export type Sekolah = {
   nama: string; namaPendek: string; tagline: string; alamat: string;
   telp: string; wa: string; email: string; jamLayanan: string;
   logo: string; subteks: string; favicon: string; deskripsiSingkat: string;
+  instagram: string; facebook: string; tiktok: string;
 };
 
 export function getSekolah(): Sekolah {
@@ -119,6 +120,9 @@ export function getSekolah(): Sekolah {
     subteks: p.subteks || "",
     favicon: p.favicon || "",
     deskripsiSingkat: p.deskripsiSingkat || "",
+    instagram: p.instagram || "",
+    facebook: p.facebook || "",
+    tiktok: p.tiktok || "",
   };
 }
 
