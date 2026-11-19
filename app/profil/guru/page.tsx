@@ -17,9 +17,9 @@ export default function Guru() {
           >
             {g.foto ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={g.foto} alt={g.nama} className="h-32 w-full object-cover rounded-xl" />
+              <img src={g.foto} alt={g.nama} className="h-36 w-full object-cover rounded-xl" />
             ) : (
-              <PlaceholderImage label="FOTO" className="h-32 !rounded-xl" />
+              <PlaceholderImage label="FOTO" className="h-36 !rounded-xl" />
             )}
             <p className="mt-3 font-bold text-zamrud-800 text-sm">{g.nama}</p>
             <p className="text-xs text-slate-500">{g.jabatan}</p>
