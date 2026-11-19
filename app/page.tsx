@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Megaphone } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
+import Sorotan from "@/components/Sorotan";
 import StatCard from "@/components/StatCard";
 import BeritaCard from "@/components/BeritaCard";
 import AgendaCard from "@/components/AgendaCard";
@@ -110,21 +111,23 @@ export default function Beranda() {
             <SectionHeading judul="Pengumuman" sub="Informasi" align="left" />
             <div className="space-y-4">
               {PENGUMUMAN.map((p) => (
-                <div
+                <Sorotan
                   key={p.slug}
-                  className="flex gap-4 bg-white rounded-2xl border border-zamrud-100 p-5 hover:shadow-sm transition-shadow"
+                  tanggalISO={p.tanggalISO}
+                  jenis="pengumuman"
+                  className="flex gap-4 rounded-2xl border border-zamrud-100 p-5 hover:shadow-sm transition-shadow"
                 >
-                  <div className="shrink-0 w-10 h-10 rounded-full bg-emas-100 text-emas-600 flex items-center justify-center">
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-emas-100 text-emas-600 group-[.sorot-aktif]:text-zamrud-900 flex items-center justify-center">
                     <Megaphone size={18} strokeWidth={1.8} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-emas-600">{p.tanggal}</p>
+                    <p className="text-xs font-semibold text-emas-600 group-[.sorot-aktif]:text-zamrud-900">{p.tanggal}</p>
                     <h3 className="mt-1 font-bold text-zamrud-800 leading-snug">
                       {p.judul}
                     </h3>
                     <p className="mt-1 text-sm text-slate-500">{p.ringkasan}</p>
                   </div>
-                </div>
+                </Sorotan>
               ))}
             </div>
             <div className="mt-6">
