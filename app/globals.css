@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Kuning muda untuk sorotan card terbaru (item 18). Token sendiri, bukan
+   emas-100: situs sudah memakai bg-emas-100 di lingkaran ikon Megaphone
+   padahal token itu belum didefinisikan — mendefinisikannya akan mengubah
+   tampilan bagian lain. */
 @theme {
   --color-zamrud-50: #eef7f1;
   --color-zamrud-100: #d8ecdf;
@@ -11,6 +15,7 @@
   --color-emas-400: #d9b545;
   --color-emas-500: #c9a227;
   --color-emas-600: #a8861d;
+  --color-kuning-muda: #f8f0d2;
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 }
 

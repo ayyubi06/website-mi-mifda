@@ -1,4 +1,6 @@
 import { MapPin } from "lucide-react";
+import Sorotan from "@/components/Sorotan";
+import { isoDariAgenda } from "@/lib/sorotan-tanggal";
 
 type Props = {
   judul: string;
@@ -10,7 +12,11 @@ type Props = {
 
 export default function AgendaCard({ judul, tanggal, bulan, tahun, tempat }: Props) {
   return (
-    <div className="flex gap-4 bg-white rounded-2xl border border-zamrud-100 p-4 hover:shadow-sm transition-shadow">
+    <Sorotan
+      tanggalISO={isoDariAgenda(tanggal, bulan, tahun)}
+      jenis="agenda"
+      className="flex gap-4 rounded-2xl border border-zamrud-100 p-4 hover:shadow-sm transition-shadow"
+    >
       <div className="shrink-0 w-16 text-center rounded-xl bg-zamrud-600 text-white py-2">
         <p className="text-2xl font-extrabold leading-none">{tanggal}</p>
         <p className="text-xs mt-1">
@@ -24,6 +30,6 @@ export default function AgendaCard({ judul, tanggal, bulan, tahun, tempat }: Pro
           {tempat}
         </p>
       </div>
-    </div>
+    </Sorotan>
   );
 }
